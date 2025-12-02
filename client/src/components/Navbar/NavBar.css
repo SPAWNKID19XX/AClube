@@ -1,11 +1,8 @@
 .main_navbar{
     display: block;
     justify-content: space-between;
-    position: fixed;
-    width: 70%;
     z-index: 1000;  
     top: 50px;
-    left: 15%;
 }
 
 .logo_section{
@@ -93,6 +90,10 @@
 
 
 @media (max-width: 1024px) {
+    .main_navbar{
+        width: 80%;
+        margin: auto;
+    }
 
     /* Базовое состояние: меню спрятано справа */
     .links_menu {
