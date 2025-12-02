@@ -1,9 +1,15 @@
 import './NavBar.css';
 import { Nav } from 'react-bootstrap';
 import LanguageSwitcher from '../LanguageSelector/LanguageSelector';
+import { useState } from 'react';
+import Hamburger from 'hamburger-react'
+
+
+
 
 
 function Navbar() {
+  const [isOpen, setOpen] = useState(false)
   return (
     <>
       <Nav className='main_navbar'>
@@ -12,7 +18,7 @@ function Navbar() {
           <img className="size-24 object-top-left" src="/src/assets/img/logo.png" />
         </div>
         
-        <div className='links_menu'>
+        <div className={`links_menu ${isOpen ? 'links_menu--open' : ''}`}>
           <ul>
             <li className="link_nav"><a href='#'>About</a></li>
             <li className="link_nav"><a href='#'>Membership</a></li>
@@ -20,9 +26,17 @@ function Navbar() {
             <li className="link_nav"><a href='#'>Contacts</a></li>
           </ul>
         </div>
-        <div className="lang_select">
-          <LanguageSwitcher />
+        <div className="right_column">
+          <div className="lang_select">
+            <LanguageSwitcher />
+          </div>
+          <div className="burger_section">
+            <Hamburger toggled={isOpen} toggle={setOpen} />
+          </div>
+          
         </div>
+        
+        
       </Nav>
     </>
   )

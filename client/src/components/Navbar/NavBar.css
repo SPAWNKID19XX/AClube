@@ -1,6 +1,11 @@
 .main_navbar{
     display: block;
     justify-content: space-between;
+    position: fixed;
+    width: 70%;
+    z-index: 1000;  
+    top: 50px;
+    left: 15%;
 }
 
 .logo_section{
@@ -16,13 +21,13 @@
 
 .links_menu{
     align-content: center;
-    width: 700px;
+    
+    width: 50%;
 }
 
 .links_menu ul {
     display: flex;
     justify-content: space-between;
-    
 }
 
 
@@ -41,7 +46,7 @@
     background-clip: text;
     animation: goldShine 3s linear infinite;
     font-weight: 500;
-    font-size: 20px;
+    font-size: 16px;
 }
 
 
@@ -68,8 +73,86 @@
 }
 
 
+.right_column{
+    align-content: center;
+    float: right;
+    display: flex;
+    flex-direction: column;
+}
+
 
 .lang_select {
     align-content: center;
     color: #d00909;
+    
+}
+
+.burger_section{
+    display: none;
+}
+
+
+@media (max-width: 1024px) {
+
+    /* Базовое состояние: меню спрятано справа */
+    .links_menu {
+        position: fixed;
+        top: 200px;
+        right: -60%; /* спрятано */
+        width: 60%;
+        background: rgba(255, 255, 255, 0.5);
+        backdrop-filter: blur(10px);
+        border-left: 2px solid wheat;
+        border-radius: 10px 0 0 10px;
+        z-index: 900;
+        height: 50%;
+        transition: right 0.4s ease; /* важное!!! */
+        display: block; /* не скрываем display:none */
+    }
+
+    .links_menu ul {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        padding: 0;
+        margin: 0;
+    }
+
+    .links_menu .link_nav a {
+        display: block;
+        font-size: 30px;
+        color: #fff;
+    }
+
+    .right_column {
+        align-content: center;
+        display: flex;
+    }
+
+    .burger_section {
+        display: block;
+        align-content: center;
+        color: #c91010;
+        margin-top: 30px;
+        position: relative;
+        z-index: 1100;
+    }
+
+
+    .links_menu--open {
+        right: 0; 
+        
+    }
+
+
+    .links_menu::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-size: cover;
+        background-position: center;
+        opacity: 0.6;
+        z-index: -1;
+        filter: brightness(0.6);
+    }
 }
