@@ -1,7 +1,7 @@
 import './Footer.css'
-// import fb from '../../assets/img/icons/facebook.png'
-// import tt from '../../assets/img/icons/tiktok.png'
-// import insta from '../../assets/img/icons/instagram.png'
+//import fb from '../../assets/img/icons/facebook.png'
+//import tt from '../../assets/img/icons/tiktok.png'
+//import insta from '../../assets/img/icons/instagram.png'
 import {useTranslation} from "react-i18next";
 import {useEffect, useState} from "react";
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
@@ -22,7 +22,7 @@ const Footer = () => {
             <div className='footer-container'>
                 <section className='footer'>
                     <div className='footer-info'>
-                        <span>For adults only.</span>
+                        <span>{t("footer.slogan")}</span>
                         <div className='social-media'>
                             {/*<a href=""><img src={fb} alt=""/></a>*/}
                             {/*<a href=""><img src={insta} alt=""/></a>*/}
@@ -30,7 +30,7 @@ const Footer = () => {
                         </div>
                         <div className='contact-politics'>
                             <div className='contacts'>
-                                <h3>Contact</h3>
+                                <h3>{t("footer.contact")}</h3>
                                 <span>📞 (+351) 000 000 000</span>
                                 <span>📧 email@gmail.com</span>
                                 <span>📍 Rua --- ---------, ---- -, ----- <br/> Faro 0000-000, Faro</span>
@@ -44,7 +44,7 @@ const Footer = () => {
                                     />
                                     <Marker position={position}>
                                         <Popup>
-                                        Next Party 😊
+                                        {t("footer.map_dot")} 😊
                                         </Popup>
                                     </Marker>
                                     </MapContainer>
@@ -53,10 +53,10 @@ const Footer = () => {
                     </div>
                 </section>
                 <div className='copyright'>
-                    <div>© {currentYear} AlibiClub. All rights reserved..</div>
-                    <a href="/privacy-policy">Privacy policy</a>
-                    <a href="/cookie-policy">Cookie policy</a>
-                    <a href="/terms-conditions">Terms conditions</a>
+                    <div>© {currentYear} AlibiClub. {t("bottom_footer.rights")}.</div>
+                    <a href="/privacy-policy">{t("bottom_footer.pp")}</a>
+                    <a href="/cookie-policy">{t("bottom_footer.cp")}</a>
+                    <a href="/terms-conditions">{t("bottom_footer.tc")}</a>
                 </div>
             </div>
         </div>

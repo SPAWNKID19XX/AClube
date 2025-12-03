@@ -1,0 +1,35 @@
+{
+    "navbar": {
+        "about": "Acerca de",
+        "membership": "Membresía",
+        "parties": "Fiestas",
+        "contacts": "Contactos"
+    },
+    "main_content": {
+        "h1": [
+            "Exclusivo",
+            "Fiestas Privadas"
+        ],
+        "p": "Descubre un mundo de sofisticación y placer",
+        "form": {
+            "title": "Únete a nosotros",
+            "subtitle": "nuestra vibra mejora con cada nueva persona que entra",
+            "label": [
+                "Nombre",
+                "Teléfono"
+            ],
+            "button_submit": "Unirse"
+        }
+    },
+    "footer": {
+        "slogan": "Detrás de la máscara, todo es posible.",
+        "contact": "Contactos",
+        "map_dot": "Próxima Fiesta"
+    },
+    "bottom_footer": {
+        "rights": "Todos los derechos reservados",
+        "pp": "Política de privacidad",
+        "cp": "Política de cookies",
+        "tc": "Términos y condiciones"
+    }
+}

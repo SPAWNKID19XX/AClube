@@ -1,0 +1,35 @@
+{
+    "navbar": {
+        "about": "About",
+        "membership": "Membership",
+        "parties": "Parties",
+        "contacts": "Contacts"
+    },
+    "main_content":{
+        "h1":[
+            "Exclusive",
+            "Private Parties"
+        ],
+        "p": "Discover a world of sophistication and pleasure",
+        "form":{
+            "title":"Join us",
+            "subtitle": "our vibe gets better with every new person who walks in",
+            "label":[
+                "Name",
+                "Phone"
+            ],
+            "button_submit": "Join"
+        }
+    },
+    "footer":{
+        "slogan":"Behind the mask, everything is possible.",
+        "contact": "Contacts",
+        "map_dot":  "Next Party"
+    },
+    "bottom_footer":{
+        "rights":"All rights reserved",
+        "pp": "Privacy policy",
+        "cp": "Cookie policy",
+        "tc": "Terms conditions"
+    }
+}
