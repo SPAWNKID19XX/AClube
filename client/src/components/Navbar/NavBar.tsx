@@ -12,6 +12,7 @@ function Navbar() {
   const [isOpen, setOpen] = useState(false)
   return (
     <>
+    
       <Nav className='main_navbar'>
         {/* Desctop version */}
         <div className="logo_section">
@@ -33,11 +34,9 @@ function Navbar() {
           <div className="burger_section">
             <Hamburger toggled={isOpen} toggle={setOpen} />
           </div>
-          
-        </div>
-        
-        
+        </div>        
       </Nav>
+    
     </>
   )
 }

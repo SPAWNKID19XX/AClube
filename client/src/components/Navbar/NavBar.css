@@ -5,6 +5,13 @@
     top: 50px;
 }
 
+.main_navbar .logo_section img{
+    position: relative;
+    transform: scale(1.5);
+    transform-origin: left;
+}
+
+
 .logo_section{
     border-radius: 50%;
     width: 200px;
@@ -18,13 +25,14 @@
 
 .links_menu{
     align-content: center;
-    
     width: 50%;
 }
 
 .links_menu ul {
     display: flex;
     justify-content: space-between;
+    position: relative;
+    z-index: 1;
 }
 
 
@@ -104,7 +112,7 @@
         background: rgba(255, 255, 255, 0.5);
         backdrop-filter: blur(10px);
         border-left: 2px solid wheat;
-        border-radius: 10px 0 0 10px;
+        border-radius: 10px;
         z-index: 900;
         height: 50%;
         transition: right 0.4s ease; /* важное!!! */
@@ -141,7 +149,7 @@
 
 
     .links_menu--open {
-        right: 0; 
+        right: 10%; 
         
     }
 
@@ -155,5 +163,22 @@
         opacity: 0.6;
         z-index: -1;
         filter: brightness(0.6);
+    }
+}
+
+@media (max-width: 900px) {
+    .main_navbar{
+        width: 100%;
+    }
+}
+
+
+@media (max-width: 768px) {
+    
+}
+
+@media (max-width: 650px) {
+    .main_navbar .logo_section img{
+        transform: scale(1);
     }
 }
