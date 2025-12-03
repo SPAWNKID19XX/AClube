@@ -1,6 +1,7 @@
 import React from "react";
 import DarkNavBar from "../components/Navbar/NavBar";
 import MainContent from "../components/MainContent/MainCintent";
+import Footer from "../components/Footer/Footer"
 
 
 function Home() {
@@ -8,6 +9,7 @@ function Home() {
         <>
             <DarkNavBar />
             <MainContent />
+            <Footer />
         </>
         
     )
