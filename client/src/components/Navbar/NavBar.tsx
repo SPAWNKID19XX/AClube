@@ -3,6 +3,7 @@ import { Nav } from 'react-bootstrap';
 import LanguageSwitcher from '../LanguageSelector/LanguageSelector';
 import { useState } from 'react';
 import Hamburger from 'hamburger-react'
+import { useTranslation } from "react-i18next";
 
 
 
@@ -10,6 +11,7 @@ import Hamburger from 'hamburger-react'
 
 function Navbar() {
   const [isOpen, setOpen] = useState(false)
+  const {t} = useTranslation()
   return (
     <>
     
@@ -21,10 +23,10 @@ function Navbar() {
         
         <div className={`links_menu ${isOpen ? 'links_menu--open' : ''}`}>
           <ul>
-            <li className="link_nav"><a href='#'>About</a></li>
-            <li className="link_nav"><a href='#'>Membership</a></li>
-            <li className="link_nav"><a href='#'>Parties</a></li>
-            <li className="link_nav"><a href='#'>Contacts</a></li>
+            <li className="link_nav"><a href='#'>{t("navbar.about")}</a></li>
+            <li className="link_nav"><a href='#'>{t("navbar.membership")}</a></li>
+            <li className="link_nav"><a href='#'>{t("navbar.parties")}</a></li>
+            <li className="link_nav"><a href='#'>{t("navbar.contacts")}</a></li>
           </ul>
         </div>
         <div className="right_column">

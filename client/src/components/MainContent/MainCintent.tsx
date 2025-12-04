@@ -1,13 +1,15 @@
 import './MainCintent.css'
+import { useTranslation } from "react-i18next";
 
 function MainContent() {
+    const {t} = useTranslation()
     return (
         <>
             <div className="container">
                 <div className="main_content_conteiner">
                     <div className="top-section">
-                        <h1>Exclusive <br/>Private Parties</h1>
-                        <p>Discover a world of sophistication and pleasure</p>
+                        <h1>{t("main_content.h1.0")} <br/>{t("main_content.h1.1")}</h1>
+                        <p>{t("main_content.p")}</p>
                     </div>
                 </div>
             </div>
@@ -16,10 +18,10 @@ function MainContent() {
                 <div className="coll"><img src="../../src/assets/img/mask.png" alt="" /></div>
                 <div className="coll">
                     <form action="">
-                        <h1>Join us</h1>
-                        <p className='form_subtitle'>our vibe gets better with every new person who walks in</p>
+                        <h1>{t("main_content.form.title")}</h1>
+                        <p className='form_subtitle'>{t("main_content.form.subtitle")}</p>
                         <div className="row">
-                            <label>Name:</label>
+                            <label>{t("main_content.form.label.0")}:</label>
                             <input type="text" />
                         </div>
                         
@@ -30,11 +32,11 @@ function MainContent() {
                         
                         
                         <div className="row">
-                            <label>Phone:</label>
+                            <label>{t("main_content.form.label.1")}:</label>
                             <input type="text" />
                         </div>
                         
-                        <a className='btn-join'>Join</a>
+                        <a className='btn-join'>{t("main_content.form.button_submit")}</a>
                     </form>
                 </div>
             </div>
