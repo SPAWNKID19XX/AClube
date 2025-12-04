@@ -3,7 +3,6 @@ import './Footer.css'
 //import tt from '../../assets/img/icons/tiktok.png'
 //import insta from '../../assets/img/icons/instagram.png'
 import {useTranslation} from "react-i18next";
-import {useEffect, useState} from "react";
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 
@@ -12,11 +11,6 @@ const Footer = () => {
     const {t} = useTranslation();
     const position: [number, number] = [37.03451228497629, -7.830632473966685];
     
-
-
-
-    
-
     return (
         <div className='page-container'>
             <div className='footer-container'>
