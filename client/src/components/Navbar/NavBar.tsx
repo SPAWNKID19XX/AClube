@@ -4,6 +4,7 @@ import LanguageSwitcher from '../LanguageSelector/LanguageSelector';
 import { useState } from 'react';
 import Hamburger from 'hamburger-react'
 import { useTranslation } from "react-i18next";
+import logo from "/src/assets/img/logo.png"
 
 
 
@@ -18,7 +19,7 @@ function Navbar() {
       <Nav className='main_navbar'>
         {/* Desctop version */}
         <div className="logo_section">
-          <img className="size-24 object-top-left" src="/src/assets/img/logo.png" />
+          <img className="size-24 object-top-left" src={logo}/>
         </div>
         
         <div className={`links_menu ${isOpen ? 'links_menu--open' : ''}`}>

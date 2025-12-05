@@ -1,4 +1,3 @@
-import React from "react";
 import DarkNavBar from "../components/Navbar/NavBar";
 import MainContent from "../components/MainContent/MainCintent";
 import Footer from "../components/Footer/Footer"
