@@ -1,7 +1,7 @@
 import './MainCintent.css'
 import { useTranslation } from "react-i18next";
-import shampagne from "../../src/assets/img/bg-shampagne.png";
-import mask from "../../src/assets/img/mask.png"
+import shampagne from "../../assets/img/bg-shampagne.png";
+import mask from "../../assets/img/mask.png"
 
 function MainContent() {
     const {t} = useTranslation()
