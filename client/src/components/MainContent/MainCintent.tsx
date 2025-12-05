@@ -1,5 +1,7 @@
 import './MainCintent.css'
 import { useTranslation } from "react-i18next";
+import shampagne from "../../src/assets/img/bg-shampagne.png";
+import mask from "../../src/assets/img/mask.png"
 
 function MainContent() {
     const {t} = useTranslation()
@@ -14,8 +16,8 @@ function MainContent() {
                 </div>
             </div>
             <div className="join-section">
-                <div className="coll"><img src="../../src/assets/img/bg-shampagne.png" alt="Shampagne" /></div>
-                <div className="coll"><img src="../../src/assets/img/mask.png" alt="" /></div>
+                <div className="coll"><img src={shampagne}  alt="Shampagne"/></div>
+                <div className="coll"><img src={mask} alt="mask" /></div>
                 <div className="coll">
                     <form action="">
                         <h1>{t("main_content.form.title")}</h1>
