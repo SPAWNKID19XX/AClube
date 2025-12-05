@@ -1,15 +1,16 @@
+// @ts-nocheck
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
 import './Footer.css'
 //import fb from '../../assets/img/icons/facebook.png'
 //import tt from '../../assets/img/icons/tiktok.png'
 //import insta from '../../assets/img/icons/instagram.png'
 import {useTranslation} from "react-i18next";
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
 
 const Footer = () => {
     const currentYear = new Date().getFullYear();
     const {t} = useTranslation();
-    const position: [number, number] = [37.03451228497629, -7.830632473966685];
+    const position: LatLngExpression =  [37.03451228497629, -7.830632473966685];
     
     return (
         <div className='page-container'>
@@ -31,17 +32,24 @@ const Footer = () => {
                                 {/*<button><img src={whatsapp} alt="" />{t("ftr.contact.btn")}</button>*/}
                             </div>
                             <div className='map_area'>
-                                <MapContainer center={position} zoom={13} style={{ height: '400px', width: '100%' }}>
+
+
+                                <MapContainer
+                                    center={position}
+                                    zoom={13}
+                                    style={{ height: "100%", width: "100%" }}
+                                    >
                                     <TileLayer
-                                        attribution='&copy; OpenStreetMap'
+                                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                                     />
+
                                     <Marker position={position}>
                                         <Popup>
-                                        {t("footer.map_dot")} 😊
+                                            {t("footer.map_dot")} 😊
                                         </Popup>
                                     </Marker>
-                                    </MapContainer>
+                                </MapContainer>
                             </div>
                         </div>
                     </div>
