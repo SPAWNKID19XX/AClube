@@ -18,8 +18,19 @@
                 "Nombre",
                 "Teléfono"
             ],
+            "terms":[
+                "Acepto los", 
+                "términos y condiciones"
+            ],
             "button_submit": "Unirse"
         }
+    },
+    "privacy_modal":{
+        "title": "Cómo utilizamos tus datos?",
+        "text":[
+            "Utilizamos tus datos (nombre, correo electrónico/teléfono) exclusivamente para enviar notificaciones sobre fiestas y novedades de nuestros proyectos.",
+            "No vendemos ni compartimos tus datos con terceros. Puedes darte de baja en cualquier momento."
+        ]
     },
     "footer": {
         "slogan": "Detrás de la máscara, todo es posible.",

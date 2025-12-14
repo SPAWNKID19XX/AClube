@@ -2,9 +2,12 @@ import './MainCintent.css'
 import { useTranslation } from "react-i18next";
 import shampagne from "../../assets/img/bg-shampagne.png";
 import mask from "../../assets/img/mask.png"
+import { useState } from "react";
+import PrivacyModal from "../PupMainForm/PrivacyModal";
 
 function MainContent() {
     const {t} = useTranslation()
+    const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
     return (
         <>
             <div className="container">
@@ -25,23 +28,35 @@ function MainContent() {
                         <div className="row">
                             <label>{t("main_content.form.label.0")}:</label>
                             <input type="text" />
-                        </div>
-                        
+                        </div>                       
                         <div className="row">
                             <label>Email:</label>
                             <input type="email" />
-                        </div>
-                        
-                        
+                        </div>                        
                         <div className="row">
                             <label>{t("main_content.form.label.1")}:</label>
                             <input type="text" />
                         </div>
-                        
-                        <a className='btn-join'>{t("main_content.form.button_submit")}</a>
+                        <div className="row">
+                            <input type="checkbox" defaultChecked={false} />
+                            <label>
+                                <span>
+                                    {t("main_content.form.terms.0")}{" "}
+                                    <a 
+                                    className="PupopPrivicyLink"
+                                    onClick={() => setIsPrivacyOpen(true)}
+                                    >
+                                    {t("main_content.form.terms.1")}
+                                    </a>
+                                </span>
+                            </label>
+                            
+                        </div>
+                        <a className='btn-subscribe-submite'>{t("main_content.form.button_submit")}</a>
                     </form>
                 </div>
             </div>
+            <PrivacyModal open={isPrivacyOpen} onClose={() => setIsPrivacyOpen(false)} />
         </>
     )
 }
