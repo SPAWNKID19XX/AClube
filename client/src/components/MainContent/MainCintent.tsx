@@ -50,7 +50,6 @@ function MainContent() {
                                     </a>
                                 </span>
                             </label>
-                            
                         </div>
                         <a className='btn-subscribe-submite'>{t("main_content.form.button_submit")}</a>
                     </form>
