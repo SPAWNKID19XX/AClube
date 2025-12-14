@@ -2,9 +2,9 @@
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import './Footer.css'
-//import fb from '../../assets/img/icons/facebook.png'
-//import tt from '../../assets/img/icons/tiktok.png'
-//import insta from '../../assets/img/icons/instagram.png'
+import fb from '../../assets/img/icons/facebook.png'
+import tt from '../../assets/img/icons/tiktok.png'
+import insta from '../../assets/img/icons/instagram.png'
 import {useTranslation} from "react-i18next";
 
 const Footer = () => {
@@ -19,9 +19,9 @@ const Footer = () => {
                     <div className='footer-info'>
                         <span>{t("footer.slogan")}</span>
                         <div className='social-media'>
-                            {/*<a href=""><img src={fb} alt=""/></a>*/}
-                            {/*<a href=""><img src={insta} alt=""/></a>*/}
-                            {/*<a href=""><img src={tt} alt=""/></a>*/}
+                            <a href="#"><img src={fb} alt=""/></a>
+                            <a href="#"><img src={insta} alt=""/></a>
+                            <a href="#"><img src={tt} alt=""/></a>
                         </div>
                         <div className='contact-politics'>
                             <div className='contacts'>
@@ -32,8 +32,6 @@ const Footer = () => {
                                 {/*<button><img src={whatsapp} alt="" />{t("ftr.contact.btn")}</button>*/}
                             </div>
                             <div className='map_area'>
-
-
                                 <MapContainer
                                     center={position}
                                     zoom={13}

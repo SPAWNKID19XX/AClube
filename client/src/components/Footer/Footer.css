@@ -60,15 +60,31 @@ body {
 .social-media {
     display: flex;
     gap: 10px;
+    margin: 0 auto;
     width: 50%;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
     padding: 10px;
 }
 
 .social-media img {
     width: 48px;
 }
+
+
+.social-media a:last-child img{
+    background: linear-gradient(
+    90deg,
+    #F91515,
+    #d00909,
+    #961010,
+    #ab0000,
+    #690000
+    );
+
+}
+
+
 
 .social-media a {
     display: flex; /* This ensures the anchor tags don't add extra space */
@@ -275,5 +291,9 @@ body {
     .copyright{
         flex-direction: column;
     }
-    
+    .map_area{
+        border: #258649 solid 2px;
+        width: 100%;
+        height: 100px;
+    }
 }

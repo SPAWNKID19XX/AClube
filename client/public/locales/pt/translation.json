@@ -17,9 +17,21 @@
             "label": [
                 "Nome",
                 "Telefone"
+                
+            ],
+            "terms":[
+                "Aceito os", 
+                "termos e condições"
             ],
             "button_submit": "Juntar-se"
         }
+    },
+    "privacy_modal":{
+        "title": "Como utilizamos os seus dados?",
+        "text":[
+            "Utilizamos os seus dados (nome, e-mail/telemóvel) exclusivamente para o envio de notificações sobre eventos e novidades dos nossos projetos.",
+            "Não vendemos nem partilhamos os seus dados com terceiros. Pode cancelar a subscrição a qualquer momento."
+        ]
     },
     "footer": {
         "slogan": "Por trás da máscara, tudo é possível.",
