@@ -2,14 +2,19 @@ import './PrivacyModal.css'
 import { useTranslation } from "react-i18next";
 import { useEffect } from "react";
 
-function PrivacyModal({ open, onClose }) {
+type PrivacyModalProps = {
+  open: boolean;
+  onClose: () => void;
+};
+
+function PrivacyModal({ open, onClose }:PrivacyModalProps) {
     const {t} = useTranslation()
     console.log("PrivacyModal open =", open);
     useEffect(() => {
         if (!open) return;
 
-        const onKeyDown = (e) => {
-        if (e.key === "Escape") onClose();
+        const onKeyDown = (e:KeyboardEvent) => {
+            if (e.key === "Escape") onClose();
         };
 
         document.addEventListener("keydown", onKeyDown);
