@@ -24,7 +24,13 @@
                 "termos e condições"
             ],
             "button_submit": "Juntar-se"
-        }
+        },
+        "alerts":[
+            "Por favor, aceite os termos",
+            "Erro",
+            "Inscrito",
+            "Erro de rede (o Django não foi iniciado?)"
+        ]
     },
     "privacy_modal":{
         "title": "Como utilizamos os seus dados?",

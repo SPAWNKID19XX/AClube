@@ -11,3 +11,11 @@ class AxceptNotificationsView(viewsets.ModelViewSet):
     permission_classes = [permissions.AllowAny]
     serializer_class = NotificationSerializer
     queryset = AxceptNotifications.objects.all()
+
+    def create(self, request, *args, **kwargs):
+        print("=== HEADERS ===")
+        #print(request.headers)
+        print("Accept-Language:", request.headers.get("Accept-Language"))
+        print("================")
+
+        return super().create(request, *args, **kwargs)

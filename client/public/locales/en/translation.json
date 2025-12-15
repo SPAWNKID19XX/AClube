@@ -23,7 +23,13 @@
                 "terms and conditions"
             ],
             "button_submit": "Join"
-        }
+        },
+        "alerts":[
+            "Please axcept terms",
+            "Error",
+            "Subscribed",
+            "Network Error (Django does started?)"
+        ]
     },
     "privacy_modal":{
         "title": "How do I understand what's going on?",

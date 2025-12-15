@@ -3,13 +3,12 @@ import { useTranslation } from "react-i18next";
 import { useEffect } from "react";
 
 type PrivacyModalProps = {
-  open: boolean;
-  onClose: () => void;
+    open: boolean;
+    onClose: () => void;
 };
 
 function PrivacyModal({ open, onClose }:PrivacyModalProps) {
     const {t} = useTranslation()
-    console.log("PrivacyModal open =", open);
     useEffect(() => {
         if (!open) return;
 

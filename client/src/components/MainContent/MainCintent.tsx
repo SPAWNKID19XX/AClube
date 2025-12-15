@@ -4,6 +4,7 @@ import shampagne from "../../assets/img/bg-shampagne.png";
 import mask from "../../assets/img/mask.png";
 import React, { useState } from "react";
 import PrivacyModal from "../PupMainForm/PrivacyModal";
+import { apiFetch } from "../../api/client";
 
 /**
  * 1) Описываем, какие поля есть в форме
@@ -28,7 +29,7 @@ function MainContent() {
         acceptedTerms: false,
     });
 
-   
+
     const onChange =
         (field: keyof FormState) =>
         (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,36 +47,38 @@ function MainContent() {
 
         // мини-валидация
         if (!form.acceptedTerms) {
-            alert("Please axcept terms!!!");
+            alert(t("main_content.alerts.0"));
             return;
         }
 
-        try {
-        const res = await fetch("http://127.0.0.1:8000/notifications/api/v1/subscribe/", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-            name: form.name,
-            email: form.email,
-            phone: form.phone,
-            axcepted: form.acceptedTerms, // snake_case для Django
-        }),
-        });
 
-        console.log(res);
+        try {
+      // ✅ теперь запрос идёт через client.ts
+      // ✅ Accept-Language должен добавляться внутри apiFetch (из localStorage)
+            const res = await apiFetch("/notifications/api/v1/subscribe/", {
+                method: "POST",
+                body: JSON.stringify({
+                name: form.name,
+                email: form.email,
+                phone: form.phone,
+                axcepted: form.acceptedTerms, // snake_case для Django
+                }),
+            });
+
+            console.log(res);
         
 
         if (!res.ok) {
             const errText = await res.text();
+            const errData = JSON.parse(errText)
             console.error("API error:", res.status, errText);
-            alert("Ошибка отправки формы");
+            alert(errData.email?.[0] || t("main_content.alerts.1"));
             return;
         }
 
         const data = await res.json();
         console.log("Saved in Django:", data);
 
-        // очистить форму после успеха
         setForm({
             name: "",
             email: "",
@@ -83,10 +86,10 @@ function MainContent() {
             acceptedTerms: false,
         });
 
-        alert("Subscribed!");
+        alert(t("main_content.alerts.2"));
         } catch (err) {
         console.error("Network error:", err);
-        alert("Network Error (Django Does started?)");
+        alert(t("main_content.alerts.3"));
         }
     };
 

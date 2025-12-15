@@ -23,7 +23,13 @@
                 "términos y condiciones"
             ],
             "button_submit": "Unirse"
-        }
+        },
+        "alerts":[
+            "Acepte los términos y condiciones",
+            "Error",
+            "Suscrito",
+            "Error de red (¿Django se ha iniciado?)"
+        ]
     },
     "privacy_modal":{
         "title": "Cómo utilizamos tus datos?",

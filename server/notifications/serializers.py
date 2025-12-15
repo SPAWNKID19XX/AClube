@@ -8,5 +8,4 @@ class NotificationSerializer(serializers.ModelSerializer):
         read_only_fields = ["subscribed_at"]
 
     def create(self, validated_data):
-        print(validated_data)
         return AxceptNotifications.objects.create(**validated_data)
