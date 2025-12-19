@@ -1,0 +1,336 @@
+/* Privacy Policy Styles */
+.privacy-policy {
+    min-height: 100vh;
+    background: #ffffff;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+    color: #2c2c2c;
+  }
+  
+  .privacy-policy__container {
+    max-width: 800px;
+    margin: 150px auto;
+    padding: 40px 24px;
+  }
+  
+  /* Header */
+  .privacy-policy__header {
+    text-align: center;
+    margin-bottom: 48px;
+    padding-bottom: 32px;
+    border-bottom: 2px solid #F4D03F;
+  }
+  
+  .privacy-policy__title {
+    font-size: 36px;
+    font-weight: 700;
+    color: #2c2c2c;
+    margin: 0 0 16px 0;
+    line-height: 1.2;
+  }
+  
+  .privacy-policy__subtitle {
+    font-size: 18px;
+    color: #666666;
+    margin: 0 0 24px 0;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .privacy-policy__meta {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    font-size: 14px;
+    color: #999999;
+  }
+  
+  .privacy-policy__date,
+  .privacy-policy__version {
+    background: #f8f9fa;
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: 1px solid #e9ecef;
+  }
+  
+  /* Content */
+  .privacy-policy__content {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+  
+  /* Sections */
+  .privacy-policy__section {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 32px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    border: 1px solid #f1f3f4;
+  }
+  
+  .privacy-policy__section-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #2c2c2c;
+    margin: 0 0 24px 0;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #F4D03F;
+    line-height: 1.3;
+  }
+  
+  .privacy-policy__section-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .privacy-policy__section-content h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #2c2c2c;
+    margin: 24px 0 12px 0;
+  }
+  
+  .privacy-policy__section-content h4 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #2c2c2c;
+    margin: 16px 0 8px 0;
+  }
+  
+  .privacy-policy__section-content p {
+    font-size: 16px;
+    line-height: 1.7;
+    color: #444444;
+    margin: 0;
+  }
+  
+  .privacy-policy__section-content strong {
+    color: #2c2c2c;
+    font-weight: 600;
+  }
+  
+  /* Lists */
+  .privacy-policy__section-content ul {
+    padding-left: 24px;
+    margin: 16px 0;
+  }
+  
+  .privacy-policy__section-content li {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #444444;
+    margin-bottom: 8px;
+    position: relative;
+  }
+  
+  .privacy-policy__section-content li::marker {
+    color: #F4D03F;
+  }
+  
+  /* Rights Section */
+  .privacy-policy__rights {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-top: 24px;
+  }
+  
+  .privacy-policy__right {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    border-left: 4px solid #F4D03F;
+  }
+  
+  .privacy-policy__right h4 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #2c2c2c;
+    margin: 0 0 8px 0;
+  }
+  
+  .privacy-policy__right p {
+    font-size: 14px;
+    color: #666666;
+    margin: 0;
+    line-height: 1.5;
+  }
+  
+  /* Contact Section */
+  .privacy-policy__contact {
+    background: #f8f9fa;
+    padding: 24px;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+    margin: 20px 0;
+  }
+  
+  .privacy-policy__contact-item {
+    font-size: 16px;
+    margin-bottom: 12px;
+    color: #444444;
+  }
+  
+  .privacy-policy__contact-item:last-child {
+    margin-bottom: 0;
+  }
+  
+  /* Footer */
+  .privacy-policy__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 48px;
+    padding-top: 32px;
+    border-top: 1px solid #e9ecef;
+  }
+  
+  .privacy-policy__back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #F4D03F;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 16px;
+    transition: all 0.3s ease;
+  }
+  
+  .privacy-policy__back-link:hover {
+    color: #F1C40F;
+    transform: translateX(-4px);
+  }
+  
+  .privacy-policy__related {
+    text-align: right;
+  }
+  
+  .privacy-policy__related p {
+    font-size: 14px;
+    color: #666666;
+    margin: 0 0 8px 0;
+  }
+  
+  .privacy-policy__related-link {
+    color: #F4D03F;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 14px;
+    transition: color 0.3s ease;
+  }
+  
+  .privacy-policy__related-link:hover {
+    color: #F1C40F;
+    text-decoration: underline;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .privacy-policy__container {
+      padding: 32px 20px;
+    }
+    
+    .privacy-policy__title {
+      font-size: 28px;
+    }
+    
+    .privacy-policy__subtitle {
+      font-size: 16px;
+    }
+    
+    .privacy-policy__meta {
+      flex-direction: column;
+      gap: 12px;
+    }
+    
+    .privacy-policy__section {
+      padding: 24px 20px;
+    }
+    
+    .privacy-policy__section-title {
+      font-size: 20px;
+    }
+    
+    .privacy-policy__section-content h3 {
+      font-size: 16px;
+    }
+    
+    .privacy-policy__section-content p,
+    .privacy-policy__section-content li {
+      font-size: 15px;
+    }
+    
+    .privacy-policy__rights {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    
+    .privacy-policy__footer {
+      flex-direction: column;
+      gap: 20px;
+      text-align: center;
+    }
+    
+    .privacy-policy__related {
+      text-align: center;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .privacy-policy__container {
+      padding: 24px 16px;
+    }
+    
+    .privacy-policy__title {
+      font-size: 24px;
+    }
+    
+    .privacy-policy__subtitle {
+      font-size: 14px;
+    }
+    
+    .privacy-policy__section {
+      padding: 20px 16px;
+    }
+    
+    .privacy-policy__section-title {
+      font-size: 18px;
+    }
+    
+    .privacy-policy__section-content p,
+    .privacy-policy__section-content li {
+      font-size: 14px;
+    }
+    
+    .privacy-policy__section-content ul {
+      padding-left: 20px;
+    }
+    
+    .privacy-policy__contact {
+      padding: 20px;
+    }
+    
+    .privacy-policy__contact-item {
+      font-size: 14px;
+    }
+  }
+  
+  /* Print styles */
+  @media print {
+    .privacy-policy {
+      background: white;
+    }
+    
+    .privacy-policy__footer {
+      display: none;
+    }
+    
+    .privacy-policy__section {
+      box-shadow: none;
+      border: 1px solid #ddd;
+      break-inside: avoid;
+    }
+  }
