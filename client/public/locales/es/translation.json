@@ -7,8 +7,8 @@
     },
     "main_content": {
         "h1": [
-            "Exclusivo",
-            "Fiestas Privadas"
+            "Exclusivos",
+            "eventos privados"
         ],
         "p": "Descubre un mundo de sofisticación y placer",
         "form": {
@@ -23,7 +23,13 @@
                 "términos y condiciones"
             ],
             "button_submit": "Unirse"
-        }
+        },
+        "alerts":[
+            "Acepte los términos y condiciones",
+            "Error",
+            "Suscrito",
+            "Error de red (¿Django se ha iniciado?)"
+        ]
     },
     "privacy_modal":{
         "title": "Cómo utilizamos tus datos?",
@@ -35,8 +41,13 @@
     "footer": {
         "slogan": "Detrás de la máscara, todo es posible.",
         "contact": "Contactos",
-        "map_dot": "Próxima Fiesta"
+        "map_dot": "Próxima Fiesta",
+        "info_cookies": {
+            "p": "Utilizamos cookies para mejorar la funcionalidad del sitio. Al continuar usándolo, aceptas el uso de cookies.",
+            "btn": "Aceptar"
+        }
     },
+
     "bottom_footer": {
         "rights": "Todos los derechos reservados",
         "pp": "Política de privacidad",

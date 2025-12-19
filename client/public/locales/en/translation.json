@@ -8,7 +8,7 @@
     "main_content":{
         "h1":[
             "Exclusive",
-            "Private Parties"
+            "private parties"
         ],
         "p": "Discover a world of sophistication and pleasure",
         "form":{
@@ -23,7 +23,13 @@
                 "terms and conditions"
             ],
             "button_submit": "Join"
-        }
+        },
+        "alerts":[
+            "Please axcept terms",
+            "Error",
+            "Subscribed",
+            "Network Error (Django does started?)"
+        ]
     },
     "privacy_modal":{
         "title": "How do I understand what's going on?",
@@ -32,10 +38,14 @@
             "We do not sell or share your data with third parties. You can unsubscribe at any time."
         ]
     },
-    "footer":{
-        "slogan":"Behind the mask, everything is possible.",
+    "footer": {
+        "slogan": "Behind the mask, everything is possible.",
         "contact": "Contacts",
-        "map_dot":  "Next Party"
+        "map_dot": "Next Party",
+        "info_cookies": {
+            "p": "We use cookies to improve the functionality of the site. By continuing to use it, you agree to the use of cookies.",
+            "btn": "Accept"
+        }
     },
     "bottom_footer":{
         "rights":"All rights reserved",

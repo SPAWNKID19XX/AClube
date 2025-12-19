@@ -7,8 +7,8 @@
     },
     "main_content": {
         "h1": [
-            "Exclusivas",
-            "Festas Privadas"
+            "Exclusivos",
+            "eventos privados"
         ],
         "p": "Descobre um mundo de sofisticação e prazer",
         "form": {
@@ -24,7 +24,13 @@
                 "termos e condições"
             ],
             "button_submit": "Juntar-se"
-        }
+        },
+        "alerts":[
+            "Por favor, aceite os termos",
+            "Erro",
+            "Inscrito",
+            "Erro de rede. Tente mais tarde"
+        ]
     },
     "privacy_modal":{
         "title": "Como utilizamos os seus dados?",
@@ -36,7 +42,11 @@
     "footer": {
         "slogan": "Por trás da máscara, tudo é possível.",
         "contact": "Contactos",
-        "map_dot": "Próxima Festa"
+        "map_dot": "Próxima Festa",
+        "info_cookies": {
+            "p": "Utilizamos cookies para melhorar a funcionalidade do site. Ao continuar a usá-lo, você aceita o uso de cookies.",
+            "btn": "Aceitar"
+        }
     },
     "bottom_footer": {
         "rights": "Todos os direitos reservados",
