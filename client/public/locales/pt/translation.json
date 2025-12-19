@@ -7,8 +7,8 @@
     },
     "main_content": {
         "h1": [
-            "Exclusivas",
-            "Festas Privadas"
+            "Exclusivos",
+            "eventos privados"
         ],
         "p": "Descobre um mundo de sofisticação e prazer",
         "form": {
@@ -29,7 +29,7 @@
             "Por favor, aceite os termos",
             "Erro",
             "Inscrito",
-            "Erro de rede (o Django não foi iniciado?)"
+            "Erro de rede. Tente mais tarde"
         ]
     },
     "privacy_modal":{
