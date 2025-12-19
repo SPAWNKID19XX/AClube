@@ -38,10 +38,14 @@
             "We do not sell or share your data with third parties. You can unsubscribe at any time."
         ]
     },
-    "footer":{
-        "slogan":"Behind the mask, everything is possible.",
+    "footer": {
+        "slogan": "Behind the mask, everything is possible.",
         "contact": "Contacts",
-        "map_dot":  "Next Party"
+        "map_dot": "Next Party",
+        "info_cookies": {
+            "p": "We use cookies to improve the functionality of the site. By continuing to use it, you agree to the use of cookies.",
+            "btn": "Accept"
+        }
     },
     "bottom_footer":{
         "rights":"All rights reserved",

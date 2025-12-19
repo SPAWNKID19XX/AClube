@@ -1,13 +1,22 @@
 import './App.css'
-import { Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Home from './pages/Home'
+import Navbar from './components/Navbar/NavBar'
+import Footer from './components/Footer/Footer'
+import CookieConsent from './components/coockiesConsent/CookiesConsent'
 
 function App() {
 
   return (
-    <Routes>
-      <Route path="/" element={< Home />} />
-    </Routes>
+    <BrowserRouter>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={< Home />} />
+      </Routes>
+      <CookieConsent/>
+      <Footer />
+    </BrowserRouter>
+    
   )
 }
 
