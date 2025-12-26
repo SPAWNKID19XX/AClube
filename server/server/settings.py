@@ -27,11 +27,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
-'127.0.0.1',
-]
+ALLOWED_HOSTS = []
 CORS_ALLOW_ALL_ORIGINS = True
 
 # Application definition
@@ -46,9 +42,17 @@ INSTALLED_APPS = [
 
     "rest_framework",
     "corsheaders",
+    "rest_framework_simplejwt",
 
     "notifications.apps.NotificationsConfig",
+    "users.apps.UsersConfig",
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
@@ -123,6 +127,8 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
+
+AUTH_USER_MODEL = 'users.CustomUser'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
