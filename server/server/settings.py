@@ -25,14 +25,26 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
-ALLOWED_HOSTS = [
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
-'127.0.0.1',
-]
+
+DEBUG = False
+
+ALLOWED_HOSTS = os.getenv(
+    "DJANGO_ALLOWED_HOSTS",
+    "localhost 127.0.0.1 192.168.100.2 server web"
+).split()
+
+# если используешь nginx + API
+CSRF_TRUSTED_ORIGINS = os.getenv(
+    "DJANGO_CSRF_TRUSTED_ORIGINS",
+    "http://192.168.100.2:8080 http://localhost:8080"
+).split()
+
 CORS_ALLOW_ALL_ORIGINS = True
+
+
+
+
 
 # Application definition
 
@@ -87,11 +99,11 @@ WSGI_APPLICATION = 'server.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.environ.get("PSQL_DB"),
-        "USER": os.environ.get("PSQL_USER"),
-        "PASSWORD": os.environ.get("PSQL_USER_PASSWORD"),
-        "HOST": "127.0.0.1",
-        "PORT": "5432",
+        "NAME": os.environ.get("PSQL_DB", "alibi_club"),
+        "USER": os.environ.get("PSQL_USER", "postgres"),
+        "PASSWORD": os.environ.get("PSQL_USER_PASSWORD", "admin"),
+        "HOST": os.environ.get("PSQL_HOST", "db"),
+        "PORT": os.environ.get("PSQL_PORT", "5432"),
     }
 }
 
