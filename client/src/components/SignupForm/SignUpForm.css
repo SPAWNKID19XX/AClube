@@ -1,0 +1,27 @@
+
+.signup-form-section {
+    margin-top: 50px;
+}
+
+form {
+    display: grid;
+    width: 50%;
+    display: grid;
+    margin: 0 auto;
+}
+.row_field{
+    display: grid;
+    margin: 25px auto;
+}
+
+input{
+    background-color: aliceblue;
+    margin-top: 10px;
+    width: 500px;
+
+}
+
+button {
+    background: #961010;
+    margin-top: 25px;
+}
