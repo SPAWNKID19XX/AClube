@@ -1,3 +1,4 @@
+from django.core.validators import RegexValidator
 from django.db import models
 from django.contrib.auth.models import  AbstractUser
 from django.utils.translation import gettext_lazy as _
@@ -39,7 +40,16 @@ class CustomUser(AbstractUser):
     # birth_date null=True, но blank=False.
     # Для сайта знакомств дата рождения обязательна,
     # поэтому в будущем в сериализаторе мы сделаем это поле required=True.
-
+    phone = models.CharField(
+        max_length=15,blank=True,
+        null=True,
+        validators=[
+            RegexValidator(
+                r'^\d+$',
+                message=_("Phone number must contain only numbers.")
+            )
+        ]
+    )
     gender = models.CharField(choices=Gender.choices, default=Gender.NA)
     birth_date = models.DateField(null=True, blank=False)
     orientation = models.CharField(choices=Orientation.choices, default=Orientation.NA)
