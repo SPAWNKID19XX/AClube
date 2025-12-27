@@ -1,8 +1,12 @@
-from rest_framework import serializers
+from django.utils.translation.trans_null import activate
+from rest_framework import serializers, settings
 from django.contrib.auth import get_user_model
 from datetime import datetime
-
+from django.core.mail import send_mail
 from .models import CustomUser
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
+from django.contrib.auth.tokens import default_token_generator
 
 
 class CustomUserSerializer(serializers.ModelSerializer):
@@ -44,5 +48,16 @@ class RegistrationSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         validated_data.pop("password_condition")
         user = CustomUser.objects.create_user(**validated_data)
+        uid=urlsafe_base64_encode(force_bytes(user.pk))
+        print('+++',uid)
+        token = default_token_generator.make_token(user)
+        print(token)
+
+        send_mail(
+            subject='Registration Request Alibi Club',
+            from_email="server.settings.DEFAULT_FROM_EMAIL",
+            message=f"link to activate your account http://localhost:8000/account/{uid}/{token}",
+            recipient_list=[user.email]
+        )
         return user
 
