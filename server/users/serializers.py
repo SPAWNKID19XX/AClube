@@ -2,7 +2,7 @@ from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from datetime import datetime
 
-from server.users.models import CustomUser
+from .models import CustomUser
 
 
 class CustomUserSerializer(serializers.ModelSerializer):
@@ -18,7 +18,9 @@ class RegistrationSerializer(serializers.ModelSerializer):
         fields=('username','email','password','password_condition','birth_date')
         extra_kwargs = {
             "password_condition":{"write_only":True},
-            "password":{"write_only":True}
+            "password":{"write_only":True},
+            "email": {"write_only": True},
+            "birth_date":{"write_only":True, "required":True},
         }
 
     def validate_birth_date(self, value):
@@ -37,10 +39,13 @@ class RegistrationSerializer(serializers.ModelSerializer):
     def validate(self, validated_data):
         if validated_data['password'] != validated_data['password_condition']:
             raise serializers.ValidationError("Passwords do not match.")
+        print("+++++++++++++++++++",validated_data)
         return validated_data
 
     def create(self, validated_data):
         validated_data.pop("password_condition")
         user = CustomUser.objects.create_user(**validated_data)
+        print("+++++++++++++++++++",validated_data)
+        user.set_password(validated_data['password'])
         return user
 
