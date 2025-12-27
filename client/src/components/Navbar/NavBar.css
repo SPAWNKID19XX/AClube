@@ -92,6 +92,23 @@
     
 }
 
+.reg_log {
+    display: grid;
+}
+
+
+.reg_log a {
+    margin-top: 15px;
+    text-decoration: none;
+    color: #d00909;
+    border-bottom: 3px solid black;
+}
+
+.reg_log a:hover {
+    border-bottom: 3px solid #d00909;
+}
+
+
 .burger_section{
     display: none;
 }

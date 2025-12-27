@@ -5,6 +5,7 @@ import { useState } from 'react';
 import Hamburger from 'hamburger-react'
 import { useTranslation } from "react-i18next";
 import logo from "/src/assets/img/logo.png"
+import { Link } from 'react-router-dom';
 
 
 
@@ -34,6 +35,10 @@ function Navbar() {
           <div className="lang_select">
             <LanguageSwitcher />
           </div>
+          <div className="reg_log">
+              <Link to="/signup">SignUP</Link>
+              <Link to="/login">Login</Link>
+            </div>
           <div className="burger_section">
             <Hamburger toggled={isOpen} toggle={setOpen} />
           </div>

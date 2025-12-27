@@ -7,7 +7,8 @@ import CookieConsent from './components/coockiesConsent/CookiesConsent'
 import PrivacyPolicy from './components/privacyPolicy/PrivacyPolicy'
 import CookiesPolicy from './components/cookiesPolicy/CookiesPolicy'
 import TermsConditions from './components/termsConditions/TermsConditions'
-
+import SignUpForm from './components/SignupForm/SignUpForm'
+import LoginForm from './components/LoginForm/LoginForm'
 
 function App() {
 
@@ -32,6 +33,16 @@ function App() {
         <Route path="/terms-conditions" element={
             <>
                 <TermsConditions/>
+            </>
+        }/>
+        <Route path="/signup" element={
+            <>
+                <SignUpForm/>
+            </>
+        }/>
+        <Route path="/login" element={
+            <>
+                <LoginForm/>
             </>
         }/>
       </Routes>
