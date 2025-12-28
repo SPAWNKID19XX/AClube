@@ -8,6 +8,7 @@ form {
     width: 50%;
     display: grid;
     margin: 0 auto;
+
 }
 .row_field{
     display: grid;
@@ -18,10 +19,10 @@ input{
     background-color: aliceblue;
     margin-top: 10px;
     width: 500px;
-
+    color: black;
 }
 
-button {
+.button_submit  button{
     background: #961010;
     margin-top: 25px;
 }

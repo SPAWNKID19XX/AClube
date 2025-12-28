@@ -7,6 +7,7 @@ import DatePicker from "react-datepicker";
 
 
 
+
 interface SignUpForm {
     username: string;
     email: string;
@@ -17,18 +18,21 @@ interface SignUpForm {
 
 }
 
+const getEighteenYearsAgo = () => {
+    const date = new Date();
+    date.setFullYear(date.getFullYear() - 18);
+    return date.toISOString().split('T')[0]; // вернет "2007-12-28" (если сегодня 2025-й)
+};
 
 const SignUpForm = () => {
     const {t} = useTranslation();
-
-
 
     const [formData, setFormData] = useState({
         username: "",
         email: "",
         password: "",
         password_condition:"",
-        birth_date:"",
+        birth_date:getEighteenYearsAgo(),
         accept_terms:false
     });
 
@@ -51,7 +55,8 @@ const SignUpForm = () => {
 
         try {
             const apiUrl = import.meta.env.VITE_API_URL;
-            const response = await axios.post(`${apiUrl}users/api/v1/signup/`, formData);
+            const response = await axios.post(`${apiUrl.endsWith('/') ? apiUrl : apiUrl + '/'}users/api/v1/signup/`, formData);
+            console.log('Response')
             console.log('Success:', response.data);
             alert(t("ftr.frm.success_msg"));
             setFormData({
@@ -62,9 +67,17 @@ const SignUpForm = () => {
                 birth_date:"",
                 accept_terms:false
             });
-        } catch (error: Error | unknown) {
-            console.error('Error:', error);
-            alert(t("ftr.frm.error_msg"));
+        } catch (error: any) {
+            // catch serializers error from DRF
+            if (error.response && error.response.data) {
+                console.log("Ошибки от бэкенда:", error.response.data);
+                
+                // exemple if error in field birthday, wi will print : {birth_date: ["error text"]}
+                alert(Object.values(error.response.data).flat().join('\n'));
+            } else {
+                console.error('Error MSG:', error.message);
+                alert(t("ftr.frm.error_msg"));
+            }
         }
     };
 
@@ -102,23 +115,21 @@ const SignUpForm = () => {
                     <div className='row_field'>
                         <label htmlFor="email">Birthday</label>
                         <DatePicker
-                        aria-label='BD'
-                        value='Select birthday'
-                        selected={formData.birth_date ? new Date(formData.birth_date) : null}
-                        onChange={(date: Date | null) => {
-                            if (date) {
-                                setFormData({
-                                    ...formData, 
-                                    birth_date: date.toISOString().split('T')[0]
-                                });
-                            }   
-                        }}
-                        dateFormat="yyyy-MM-dd"
-                        maxDate={new Date()} 
-                        showYearDropdown 
-                        scrollableYearDropdown
-                        required
-                    />
+                            selected={formData.birth_date ? new Date(formData.birth_date) : null}
+                            onChange={(date: Date | null) => {
+                                if (date) {
+                                    setFormData({
+                                        ...formData, 
+                                        birth_date: date.toISOString().split('T')[0]
+                                    });
+                                }
+                            }}
+                            dateFormat="yyyy-MM-dd"
+                            maxDate={new Date(new Date().setFullYear(new Date().getFullYear() - 18))}
+                            showYearDropdown
+                            scrollableYearDropdown
+                            yearDropdownItemNumber={50}
+                        />
                     </div>
                     
 
@@ -147,8 +158,11 @@ const SignUpForm = () => {
                             required
                         />
                     </div>
+                    <div className="button_submit">
+                        <button type="submit">Sign Up</button>
+                    </div>
                     
-                    <button type="submit">{t("ftr.frm.btn")}</button>
+                    
                 </form>
             </div>
         </div>

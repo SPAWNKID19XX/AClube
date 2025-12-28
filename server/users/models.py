@@ -35,11 +35,10 @@ class CustomUser(AbstractUser):
         VILA_REAL = "vila_real", "Vila Real"
         VISEU = "viseu", "Viseu"
 
-
-#todo
-    # birth_date null=True, но blank=False.
-    # Для сайта знакомств дата рождения обязательна,
-    # поэтому в будущем в сериализаторе мы сделаем это поле required=True.
+    email =models.EmailField(
+        max_length=100,
+        unique=True,
+    )
     phone = models.CharField(
         max_length=15,blank=True,
         null=True,
