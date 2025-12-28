@@ -1,9 +1,11 @@
 import './SignUpForm.css'
 import {useState} from "react";
 import axios from "axios";
+
 import {useTranslation} from "react-i18next";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
+
 
 
 
@@ -12,9 +14,9 @@ interface SignUpForm {
     username: string;
     email: string;
     password: string;
-    password_condition:string;
+    password_confirmation:string;
     birth_date:string;
-    accept_terms: boolean
+    is_accepted: boolean
 
 }
 
@@ -26,14 +28,13 @@ const getEighteenYearsAgo = () => {
 
 const SignUpForm = () => {
     const {t} = useTranslation();
-
     const [formData, setFormData] = useState({
         username: "",
         email: "",
         password: "",
-        password_condition:"",
+        password_confirmation:"",
         birth_date:getEighteenYearsAgo(),
-        accept_terms:false
+        is_accepted:false
     });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -53,6 +54,16 @@ const SignUpForm = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
+        if (formData.password !== formData.password_confirmation) {
+            alert("Passwords doesn't mutch");
+            return;
+        }
+
+        if (!formData.is_accepted) {
+            alert("Read and accept terms");
+            return;
+        }
+
         try {
             const apiUrl = import.meta.env.VITE_API_URL;
             const response = await axios.post(`${apiUrl.endsWith('/') ? apiUrl : apiUrl + '/'}users/api/v1/signup/`, formData);
@@ -63,21 +74,28 @@ const SignUpForm = () => {
                 username: "",
                 email: "",
                 password: "",
-                password_condition:"",
+                password_confirmation:"",
                 birth_date:"",
-                accept_terms:false
+                is_accepted:false
             });
-        } catch (error: any) {
-            // catch serializers error from DRF
-            if (error.response && error.response.data) {
-                console.log("Ошибки от бэкенда:", error.response.data);
-                
-                // exemple if error in field birthday, wi will print : {birth_date: ["error text"]}
-                alert(Object.values(error.response.data).flat().join('\n'));
-            } else {
-                console.error('Error MSG:', error.message);
-                alert(t("ftr.frm.error_msg"));
-            }
+        } catch (err: unknown) {
+            // cheking axios errors
+            if (axios.isAxiosError(err)) {
+                const serverData = err.response?.data;
+
+                if (serverData) {
+                    console.log("Backend error:", serverData);
+                    const messages = Object.values(serverData as Record<string, string[]>).flat();
+                    alert(messages.join('\n'));
+                } else {
+                    alert(err.message);
+                }
+            } 
+                else{
+                    // !network error(frontend error)
+                    console.error('Frontend error:', err);
+                    alert(err);
+                }
         }
     };
 
@@ -151,18 +169,37 @@ const SignUpForm = () => {
                         <label htmlFor="pass_confirm">Condition password</label>
                         <input
                             type="password"
-                            id="password_condition"
-                            name="password_condition"
-                            value={formData.password_condition}
+                            id="password_confirmation"
+                            name="password_confirmation"
+                            value={formData.password_confirmation}
                             onChange={handleChange}
                             required
                         />
                     </div>
+                    <div className="accept_signup_terms">
+                        
+                        <input
+                            type="checkbox"
+                            name="is_accepted"
+                            checked={formData.is_accepted}
+                            onChange={handleChange}
+                        />
+
+                        <label>
+                            <span> Accept {" "}
+                                <span><a href="/privacy-policy">{t("bottom_footer.pp")} </a></span>  
+                                <span><a href="/cookie-policy">{t("bottom_footer.cp")} </a></span>
+                                <span><a href="/terms-conditions">{t("bottom_footer.tc")}</a></span>
+                            </span>
+                        </label>
+
+
+
+
+                    </div>
                     <div className="button_submit">
                         <button type="submit">Sign Up</button>
                     </div>
-                    
-                    
                 </form>
             </div>
         </div>

@@ -14,25 +14,11 @@ interface LoginForm {
 const LoginForm = () => {
     const {t} = useTranslation();
 
-
-
     const [formData, setFormData] = useState({
         username: '',
         password: '',
     });
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-        const target = e.target;
-        const value = target instanceof HTMLInputElement && target.type === 'checkbox'
-            ? target.checked
-            : target.value;
-        const name = target.name;
-
-        setFormData(prev => ({
-            ...prev,
-            [name]: value,
-        }));
-    };
 
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -40,16 +26,31 @@ const LoginForm = () => {
 
         try {
             const apiUrl = import.meta.env.VITE_API_URL;
-            const response = await axios.post(`${apiUrl}/api/v1/main/`, formData);
+            const response = await axios.post(`${apiUrl.endsWith('/') ? apiUrl : apiUrl + '/'}users/api/v1/login/`, formData);
+            console.log('Response')
             console.log('Success:', response.data);
             alert(t("ftr.frm.success_msg"));
             setFormData({
-                username: '',
-                password: ''
+                username: "",
+                password: "",
             });
-        } catch (error: Error | unknown) {
-            console.error('Error:', error);
-            alert(t("ftr.frm.error_msg"));
+        } catch (err: unknown) {
+            if (axios.isAxiosError(err)) {
+                const serverData = err.response?.data;
+
+                if (serverData) {
+                    console.log("Backend error:", serverData);
+                    const messages = Object.values(serverData as Record<string, string[]>).flat();
+                    alert(messages.join('\n'));
+                } else {
+                    alert(err.message);
+                }
+            } 
+                else{
+                    // Э!network error(frontend error)
+                    console.error('Frontend error:', err);
+                    alert(err);
+                }
         }
     };
 
@@ -58,27 +59,33 @@ const LoginForm = () => {
             <div className="container">
                 <h1>Login Form</h1>
                 <form onSubmit={handleSubmit}>
-                    <label htmlFor="username">Username</label>
-                    <input
-                        type="text"
-                        id="username"
-                        name="username"
-                        value={formData.username}
-                        onChange={handleChange}
-                        required
-                    />
+                    <div className='row_field'>
+                        <label htmlFor="username">Username</label>
+                        <input
+                            type="text"
+                            id="username"
+                            name="username"
+                            value={formData.username}
+                            required
+                        />
+                    </div>
+                    
+                    <div className='row_field'>
+                        <label htmlFor="email">Password*</label>
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            value={formData.password}
+                            required
+                        />
 
-                    <label htmlFor="email">Password*</label>
-                    <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        value={formData.password}
-                        onChange={handleChange}
-                        required
-                    />
-                    <button type="submit">{t("ftr.frm.btn")}</button>
+                    </div>
+                    <div className="button_submit">
+                        <button type="submit">Login</button>
+                    </div>
                 </form>
+
             </div>
         </div>
     );

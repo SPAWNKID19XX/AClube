@@ -15,16 +15,17 @@ class CustomUserSerializer(serializers.ModelSerializer):
         fields = ('__all__')
 
 class RegistrationSerializer(serializers.ModelSerializer):
-    password_condition = serializers.CharField(min_length=8, write_only=True)
+    password_confirmation = serializers.CharField(min_length=8, write_only=True)
 
     class Meta:
         model = get_user_model()
-        fields=('username','email','password','password_condition','birth_date')
+        fields=('username','email','password','password_confirmation','birth_date', 'is_accepted')
         extra_kwargs = {
-            "password_condition":{"write_only":True},
+            "password_confirmation":{"write_only":True},
             "password":{"write_only":True},
             "email": {"write_only": True, "required":True},
             "birth_date":{"write_only":True, "required":True},
+            "is_accepted":{"required":True},
         }
 
     def validate_birth_date(self, value):
@@ -41,12 +42,12 @@ class RegistrationSerializer(serializers.ModelSerializer):
         return value
 
     def validate(self, validated_data):
-        if validated_data['password'] != validated_data['password_condition']:
+        if validated_data['password'] != validated_data['password_confirmation']:
             raise serializers.ValidationError("Passwords do not match.")
         return validated_data
 
     def create(self, validated_data):
-        validated_data.pop("password_condition")
+        validated_data.pop("password_confirmation")
         user = CustomUser.objects.create_user(**validated_data)
         uid=urlsafe_base64_encode(force_bytes(user.pk))
         print('+++',uid)

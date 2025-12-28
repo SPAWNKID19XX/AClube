@@ -6,10 +6,7 @@ import React, { useState } from "react";
 import PrivacyModal from "../PupMainForm/PrivacyModal";
 import { apiFetch } from "../../api/client";
 
-/**
- * 1) Описываем, какие поля есть в форме
- *    (TypeScript будет подсказывать и ловить ошибки)
- */
+/**Description fields for subscribe form*/
 type FormState = {
     name: string;
     email: string;
@@ -43,9 +40,7 @@ function MainContent() {
 
     
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault(); // не перезагружать страницу
-
-        // мини-валидация
+        e.preventDefault(); 
         if (!form.acceptedTerms) {
             alert(t("main_content.alerts.0"));
             return;
@@ -53,43 +48,40 @@ function MainContent() {
 
 
         try {
-      // ✅ теперь запрос идёт через client.ts
-      // ✅ Accept-Language должен добавляться внутри apiFetch (из localStorage)
             const res = await apiFetch("/notifications/api/v1/subscribe/", {
                 method: "POST",
                 body: JSON.stringify({
                 name: form.name,
                 email: form.email,
                 phone: form.phone,
-                axcepted: form.acceptedTerms, // snake_case для Django
+                axcepted: form.acceptedTerms,
                 }),
             });
 
             console.log(res);
         
+            if (!res.ok) {
+                const errText = await res.text();
+                const errData = JSON.parse(errText)
+                console.error("API error:", res.status, errText);
+                alert(errData.email?.[0] || t("main_content.alerts.1"));
+                return;
+            }
 
-        if (!res.ok) {
-            const errText = await res.text();
-            const errData = JSON.parse(errText)
-            console.error("API error:", res.status, errText);
-            alert(errData.email?.[0] || t("main_content.alerts.1"));
-            return;
-        }
+            const data = await res.json();
+            console.log("Saved in Django:", data);
 
-        const data = await res.json();
-        console.log("Saved in Django:", data);
+            setForm({
+                name: "",
+                email: "",
+                phone: "",
+                acceptedTerms: false,
+            });
 
-        setForm({
-            name: "",
-            email: "",
-            phone: "",
-            acceptedTerms: false,
-        });
-
-        alert(t("main_content.alerts.2"));
+            alert(t("main_content.alerts.2"));
         } catch (err) {
-        console.error("Network error:", err);
-        alert(t("main_content.alerts.3"));
+            console.error("Network error:", err);
+            alert(t("main_content.alerts.3"));
         }
     };
 
@@ -109,83 +101,71 @@ function MainContent() {
 
         <div className="join-section">
             <div className="coll">
-            <img src={shampagne} alt="Shampagne" />
+                <img src={shampagne} alt="Shampagne" />
             </div>
 
             <div className="coll">
-            <img src={mask} alt="mask" />
+                <img src={mask} alt="mask" />
             </div>
 
             <div className="coll">
-            {/* 5) ВАЖНО: onSubmit вешаем на form */}
-            <form onSubmit={handleSubmit}>
-                <h1>{t("main_content.form.title")}</h1>
-                <p className="form_subtitle">{t("main_content.form.subtitle")}</p>
+                <form onSubmit={handleSubmit}>
+                    <h1>{t("main_content.form.title")}</h1>
+                    <p className="form_subtitle">{t("main_content.form.subtitle")}</p>
+                    <div className="row">
+                    <label>{t("main_content.form.label.0")}:</label>
+                    <input
+                        type="text"
+                        value={form.name}
+                        onChange={onChange("name")}
+                        required
+                    />
+                    </div>
+                    <div className="row">
+                        <label>Email:</label>
+                        <input
+                            type="email"
+                            value={form.email}
+                            onChange={onChange("email")}
+                            required
+                        />
+                    </div>
+                    <div className="row">
+                        <label>{t("main_content.form.label.1")}:</label>
+                        <input
+                            type="text"
+                            value={form.phone}
+                            onChange={onChange("phone")}
+                        />
+                    </div>
+                    <div className="row">
+                    
+                        <input
+                            type="checkbox"
+                            checked={form.acceptedTerms}
+                            onChange={onChange("acceptedTerms")}
+                        />
 
-                <div className="row">
-                <label>{t("main_content.form.label.0")}:</label>
-                {/* 6) Контролируемый input: value + onChange */}
-                <input
-                    type="text"
-                    value={form.name}
-                    onChange={onChange("name")}
-                    required
-                />
-                </div>
-
-                <div className="row">
-                <label>Email:</label>
-                <input
-                    type="email"
-                    value={form.email}
-                    onChange={onChange("email")}
-                    required
-                />
-                </div>
-
-                <div className="row">
-                <label>{t("main_content.form.label.1")}:</label>
-                <input
-                    type="text"
-                    value={form.phone}
-                    onChange={onChange("phone")}
-                />
-                </div>
-
-                <div className="row">
-                {/* 7) checkbox контролируем через checked */}
-                <input
-                    type="checkbox"
-                    checked={form.acceptedTerms}
-                    onChange={onChange("acceptedTerms")}
-                />
-
-                <label>
-                    <span>
-                    {t("main_content.form.terms.0")}{" "}
-                    {/* Чтобы ссылка не прыгала наверх страницы */}
-                    <a
-                        href="#"
-                        className="PupopPrivicyLink"
-                        onClick={(e) => {
-                        e.preventDefault();
-                        setIsPrivacyOpen(true);
-                        }}
-                    >
-                        {t("main_content.form.terms.1")}
-                    </a>
-                    </span>
-                </label>
-                </div>
-
-                {/* 8) Кнопка submit должна быть button */}
-                <button className="btn-subscribe-submite" type="submit">
-                {t("main_content.form.button_submit")}
-                </button>
-
-                {/* Для обучения можешь показывать state на экране */}
-                {/* <pre>{JSON.stringify(form, null, 2)}</pre> */}
-            </form>
+                        <label>
+                            <span>
+                            {t("main_content.form.terms.0")}{" "}
+                            <a
+                                href="#"
+                                className="PupopPrivicyLink"
+                                onClick={(e) => {
+                                e.preventDefault();
+                                setIsPrivacyOpen(true);
+                                }}
+                            >
+                                {t("main_content.form.terms.1")}
+                            </a>
+                            </span>
+                        </label>
+                    </div>
+                    <button className="btn-subscribe-submite" type="submit">
+                    {t("main_content.form.button_submit")}
+                    </button>
+                </form>
             </div>
         </div>
 

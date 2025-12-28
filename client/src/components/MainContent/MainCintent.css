@@ -30,6 +30,11 @@
     justify-content: space-between;
 }
 
+.coll form{
+    position: relative;
+    width: 500px;
+}
+
 .form_subtitle{
     width: 250px;
     margin: 0 auto;
@@ -52,7 +57,7 @@
 }
 .join-section .coll:nth-child(2) img{
     position: relative;
-    transform: scale(2); /* увеличивает в 1.5 раза */
+    transform: scale(2); 
     transform-origin: center;
     margin-top: 100px;
     top: 100px;
@@ -70,9 +75,10 @@
 }
 
 .join-section input {
-    /*background: #961010;*/
     background: gray;
     margin-top: 10px;
+    border: 2px solid red;
+    width: 100%;
 }
 
 .PupopPrivicyLink{
@@ -90,6 +96,11 @@
     }
     .join-section .coll{
         width: 100%;
+    }
+    .coll form{
+        position: relative;
+        width: 500px;
+        left: 0px;
     }
 
 
@@ -129,6 +140,19 @@
     }
     .top-section h1{
         font-size: 55px;
-
     }
+
+    .coll form{
+        
+        width: 90%;
+    }
+
+}
+
+@media (max-width: 500px) {
+    .coll form{
+        
+        width: 90%;
+    }
+    
 }
