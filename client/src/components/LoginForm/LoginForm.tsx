@@ -2,6 +2,7 @@ import './LoginForm.css'
 import {useState} from "react";
 import axios from "axios";
 import {useTranslation} from "react-i18next";
+import api from '../../api/exios';
 
 
 
@@ -11,29 +12,35 @@ interface LoginForm {
 }
 
 
+
+
+
 const LoginForm = () => {
     const {t} = useTranslation();
-
-    const [formData, setFormData] = useState({
-        username: '',
-        password: '',
-    });
-
-
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         try {
-            const apiUrl = import.meta.env.VITE_API_URL;
-            const response = await axios.post(`${apiUrl.endsWith('/') ? apiUrl : apiUrl + '/'}users/api/v1/login/`, formData);
-            console.log('Response')
+            // Use 'api' insted of 'axios'. 
+            // URL relative, becouse baseURL configured axios.tsx
+            const response = await api.post('users/api/v1/token/', formData);
+            
             console.log('Success:', response.data);
-            alert(t("ftr.frm.success_msg"));
-            setFormData({
-                username: "",
-                password: "",
-            });
+
+            // 1. get access token (Refresh will automatecly puted to cockies)
+            const { access } = response.data; // access becouse DRF return ['access', 'refresh'].keys
+            
+            console.log('===---=== ACCESS:', access)
+
+            // 2. Save access in AuthContext
+            // setAccessToken(access); 
+                        
+            setFormData({ username: "", password: "" });
+
+            // 3. Redirect to index page with logined user
+            // navigate('/');
+
         } catch (err: unknown) {
             if (axios.isAxiosError(err)) {
                 const serverData = err.response?.data;
@@ -47,12 +54,17 @@ const LoginForm = () => {
                 }
             } 
                 else{
-                    // Э!network error(frontend error)
+                    // !network error(frontend error)
                     console.error('Frontend error:', err);
                     alert(err);
                 }
         }
     };
+
+    const [formData, setFormData] = useState({
+        username: '',
+        password: '',
+    });
 
     return (
         <div className='contact-form-section'>
