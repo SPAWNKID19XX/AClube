@@ -34,6 +34,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
 ]
+CORS_ALLOW_CREDENTIALS = True
 
 # Application definition
 
@@ -48,6 +49,9 @@ INSTALLED_APPS = [
     "rest_framework",
     "corsheaders",
     "rest_framework_simplejwt",
+    'rest_framework.authtoken',
+    'dj_rest_auth',
+    'rest_framework_simplejwt.token_blacklist',
 
     "notifications.apps.NotificationsConfig",
     "users.apps.UsersConfig",
@@ -56,6 +60,7 @@ INSTALLED_APPS = [
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
     ),
 }
 
@@ -68,7 +73,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    #'django.middleware.locale.LocaleMiddleware'
+    # 'django.middleware.locale.LocaleMiddleware'
 ]
 
 ROOT_URLCONF = 'server.urls'
@@ -142,3 +147,16 @@ STATIC_URL = 'static/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL")
+
+REST_USE_JWT = True
+JWT_AUTH_COOKIE = 'ac-auth-token'
+JWT_AUTH_REFRESH_COOKIE = 'ac-refresh-token'
+JWT_AUTH_HTTPONLY = True
+JWT_AUTH_SECURE = not DEBUG
+JWT_AUTH_SAMESITE = 'Lax'
+
+SIMPLE_JWT = {
+    'ROTATE_REFRESH_TOKENS': True,    # ВКЛЮЧАЕМ РОТАЦИЮ: новый refresh при каждом обновлении
+    'BLACKLIST_AFTER_ROTATION': True, # Старый refresh сразу в черный список
+    'UPDATE_LAST_LOGIN': True,
+}
