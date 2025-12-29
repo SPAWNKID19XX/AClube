@@ -18,6 +18,14 @@ interface LoginForm {
 const LoginForm = () => {
     const {t} = useTranslation();
 
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
@@ -27,6 +35,7 @@ const LoginForm = () => {
             const response = await api.post('users/api/v1/token/', formData);
             
             console.log('Success:', response.data);
+            console.log('Response:', response )
 
             // 1. get access token (Refresh will automatecly puted to cockies)
             const { access } = response.data; // access becouse DRF return ['access', 'refresh'].keys
@@ -78,6 +87,7 @@ const LoginForm = () => {
                             id="username"
                             name="username"
                             value={formData.username}
+                            onChange={handleChange}
                             required
                         />
                     </div>
@@ -89,6 +99,7 @@ const LoginForm = () => {
                             id="password"
                             name="password"
                             value={formData.password}
+                            onChange={handleChange}
                             required
                         />
 

@@ -9,48 +9,49 @@ import CookiesPolicy from './components/cookiesPolicy/CookiesPolicy'
 import TermsConditions from './components/termsConditions/TermsConditions'
 import SignUpForm from './components/SignupForm/SignUpForm'
 import LoginForm from './components/LoginForm/LoginForm'
+import { AuthProvider } from './components/AuthContext/AuthProvider';
 
 function App() {
 
-  return (
-    <BrowserRouter>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={< Home />} />
-        <Route path="/privacy-policy" element={
-            <>
-                <PrivacyPolicy/>
-            </>
-        }/>
-
-        <Route path="/cookie-policy" element={
-            <>
-                <CookiesPolicy/>
-            </>
-        }/>
-
-
-        <Route path="/terms-conditions" element={
-            <>
-                <TermsConditions/>
-            </>
-        }/>
-        <Route path="/signup" element={
-            <>
-                <SignUpForm/>
-            </>
-        }/>
-        <Route path="/login" element={
-            <>
-                <LoginForm/>
-            </>
-        }/>
-      </Routes>
-      <CookieConsent/>
-      <Footer />
-    </BrowserRouter>
-    
-  )
+    return (
+        <BrowserRouter>
+            <AuthProvider>
+                <Navbar />
+                <Routes>
+                    <Route path="/" element={< Home />} />
+                    <Route path="/privacy-policy" element={
+                        <>
+                            <PrivacyPolicy/>
+                        </>
+                    }/>
+                    <Route path="/cookie-policy" element={
+                        <>
+                            <CookiesPolicy/>
+                        </>
+                    }/>
+                    <Route path="/terms-conditions" element={
+                        <>
+                            <TermsConditions/>
+                        </>
+                    }/>
+                    <Route path="/signup" element={
+                        <>
+                            <SignUpForm/>
+                        </>
+                    }/>
+                    <Route path="/login" element={
+                        <>
+                            <LoginForm/>
+                        </>
+                    }/>
+                </Routes>
+                <CookieConsent/>
+                <Footer />
+            </AuthProvider>
+        </BrowserRouter>
+        
+        
+    )
 }
 
 export default App
