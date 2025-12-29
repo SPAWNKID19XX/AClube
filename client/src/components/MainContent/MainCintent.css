@@ -1,8 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&display=swap');
 
-
-
-
 .main_content_conteiner{
     width: 90%;
     margin: 0 auto;
@@ -77,13 +74,19 @@
 .join-section input {
     background: gray;
     margin-top: 10px;
-    border: 2px solid red;
     width: 100%;
 }
 
 .PupopPrivicyLink{
     text-decoration: none;
+    border: 2px solid black;
     color: gray;    
+}
+
+.PupopPrivicyLink:hover{
+    color: gray;
+    border-bottom: 2px solid #961010;
+    
 }
 
 

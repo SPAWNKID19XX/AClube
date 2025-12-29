@@ -50,9 +50,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
         validated_data.pop("password_confirmation")
         user = CustomUser.objects.create_user(**validated_data)
         uid=urlsafe_base64_encode(force_bytes(user.pk))
-        print('+++',uid)
         token = default_token_generator.make_token(user)
-        print(token)
 
         send_mail(
             subject='Registration Request Alibi Club',
