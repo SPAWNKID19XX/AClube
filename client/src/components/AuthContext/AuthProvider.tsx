@@ -11,12 +11,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const refreshAndLoadUser = async () => {
         try {
             // 1. Try to update a token
-            const refreshRes = await api.post('users/api/v1/token/refresh/');
+            const refreshRes = await api.post('users/api/v1/auth/token/refresh/');
             const access = refreshRes.data.access;
             setAccessToken(access);
 
             // 2.get token      
-            const userRes = await api.get('users/api/v1/me/', {
+            const userRes = await api.get('users/api/v1/auth/user/', {
                 headers: { Authorization: `Bearer ${access}` }
             });
             setUser(userRes.data);

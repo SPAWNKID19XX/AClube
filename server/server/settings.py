@@ -49,6 +49,7 @@ REST_FRAMEWORK = {
 
 REST_AUTH = {
     'USE_JWT': True,
+    'JWT_AUTH_HTTPONLY': True,
     'JWT_AUTH_COOKIE': 'my-app-auth',
     'JWT_AUTH_REFRESH_COOKIE': 'my-refresh-token',
 }
@@ -86,9 +87,7 @@ INSTALLED_APPS = [
 
     # custom
     # Optional -- requires install using `django-allauth[socialaccount]`.
-    ]
-
-
+]
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
@@ -176,4 +175,4 @@ STATIC_URL = 'static/'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL")
 
-LOGIN_METHODS="username"
+LOGIN_METHODS = "username"
