@@ -13,8 +13,8 @@ import DatePicker from "react-datepicker";
 interface SignUpForm {
     username: string;
     email: string;
-    password: string;
-    password_confirmation:string;
+    password1: string;
+    password2:string;
     birth_date:string;
     is_accepted: boolean
 
@@ -31,8 +31,8 @@ const SignUpForm = () => {
     const [formData, setFormData] = useState({
         username: "",
         email: "",
-        password: "",
-        password_confirmation:"",
+        password1: "",
+        password2:"",
         birth_date:getEighteenYearsAgo(),
         is_accepted:false
     });
@@ -54,7 +54,7 @@ const SignUpForm = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (formData.password !== formData.password_confirmation) {
+        if (formData.password1 !== formData.password2) {
             alert("Passwords doesn't mutch");
             return;
         }
@@ -66,15 +66,15 @@ const SignUpForm = () => {
 
         try {
             const apiUrl = import.meta.env.VITE_API_URL;
-            const response = await axios.post(`${apiUrl.endsWith('/') ? apiUrl : apiUrl + '/'}users/api/v1/signup/`, formData);
+            const response = await axios.post(`${apiUrl.endsWith('/') ? apiUrl : apiUrl + '/'}users/api/v1/auth/registration/`, formData);
             console.log('Response')
             console.log('Success:', response.data);
             alert(t("ftr.frm.success_msg"));
             setFormData({
                 username: "",
                 email: "",
-                password: "",
-                password_confirmation:"",
+                password1: "",
+                password2:"",
                 birth_date:"",
                 is_accepted:false
             });
@@ -155,9 +155,9 @@ const SignUpForm = () => {
                         <label htmlFor="email">Password*</label>
                         <input
                             type="password"
-                            id="password"
-                            name="password"
-                            value={formData.password}
+                            id="password1"
+                            name="password1"
+                            value={formData.password1}
                             onChange={handleChange}
                             required
                         />
@@ -169,9 +169,9 @@ const SignUpForm = () => {
                         <label htmlFor="pass_confirm">Condition password</label>
                         <input
                             type="password"
-                            id="password_confirmation"
-                            name="password_confirmation"
-                            value={formData.password_confirmation}
+                            id="password2"
+                            name="password2"
+                            value={formData.password2}
                             onChange={handleChange}
                             required
                         />

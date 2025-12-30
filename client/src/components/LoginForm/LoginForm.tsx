@@ -3,6 +3,7 @@ import {useState} from "react";
 import axios from "axios";
 import {useTranslation} from "react-i18next";
 import api from '../../api/exios';
+import { useAuth } from '../../hooks/useAuth';
 
 
 
@@ -12,11 +13,10 @@ interface LoginForm {
 }
 
 
-
-
-
 const LoginForm = () => {
     const {t} = useTranslation();
+    console.log(t("AlibiClub translater error anulation"))
+    const { setAccessToken, setUser } = useAuth(); 
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -32,10 +32,7 @@ const LoginForm = () => {
         try {
             // Use 'api' insted of 'axios'. 
             // URL relative, becouse baseURL configured axios.tsx
-            const response = await api.post('users/api/v1/token/', formData);
-            
-            console.log('Success:', response.data);
-            console.log('Response:', response )
+            const response = await api.post('users/api/v1/auth/login/', formData);
 
             // 1. get access token (Refresh will automatecly puted to cockies)
             const { access } = response.data; // access becouse DRF return ['access', 'refresh'].keys
@@ -43,8 +40,13 @@ const LoginForm = () => {
             console.log('===---=== ACCESS:', access)
 
             // 2. Save access in AuthContext
-            // setAccessToken(access); 
-                        
+            setAccessToken(access); 
+
+            const userRes = await api.get('users/api/v1/me/', {
+                headers: { Authorization: `Bearer ${access}` }
+            });
+            
+            setUser(userRes.data);
             setFormData({ username: "", password: "" });
 
             // 3. Redirect to index page with logined user
@@ -74,6 +76,8 @@ const LoginForm = () => {
         username: '',
         password: '',
     });
+
+    
 
     return (
         <div className='contact-form-section'>

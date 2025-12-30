@@ -4,6 +4,17 @@ import { createContext } from 'react';
 export interface AuthContextType {
     accessToken: string | null;
     setAccessToken: (token: string | null) => void;
+
+    user: User | null;
+    setUser: (user: User | null) => void;
+}
+
+export interface User {
+    username: string;
+    email?: string;
+    first_name?:string;
+    last_name?:string;
+    // add columns from your DRFSeriualizer.
 }
 
 // Экспортируем только объект контекста

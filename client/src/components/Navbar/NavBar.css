@@ -92,20 +92,31 @@
     
 }
 
-.reg_log {
+.auth-buttons {
     display: grid;
 }
 
 
-.reg_log a {
+.auth-buttons a {
     margin-top: 15px;
     text-decoration: none;
     color: #d00909;
     border-bottom: 3px solid black;
 }
 
-.reg_log a:hover {
+.auth-buttons a:hover {
     border-bottom: 3px solid #d00909;
+}
+
+.user-profile {
+    color: #d00909;
+    display: grid;
+    
+}
+.user-profile button{
+    color: white;
+    background-color:  #d00909;
+    border-radius: 25px;
 }
 
 

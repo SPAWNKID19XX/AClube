@@ -5,7 +5,10 @@ import { useState } from 'react';
 import Hamburger from 'hamburger-react'
 import { useTranslation } from "react-i18next";
 import logo from "/src/assets/img/logo.png"
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../hooks/useAuth';
+import api from '../../api/exios';
+
 
 
 
@@ -14,6 +17,24 @@ import { Link } from 'react-router-dom';
 function Navbar() {
   const [isOpen, setOpen] = useState(false)
   const {t} = useTranslation()
+  const { user, setUser, setAccessToken } = useAuth();
+  const navigate = useNavigate();
+  const handleLogout = async () => {
+        try {
+            // 1. Сообщаем бэкенду о выходе (чтобы он аннулировал Refresh-куку)
+            // В dj-rest-auth это обычно POST на /auth/logout/
+            await api.post('users/api/v1/logout/');
+        } catch (err) {
+            console.error("Ошибка при логауте на сервере", err);
+        } finally {
+            // 2. Очищаем состояние на фронтенде в любом случае
+            setAccessToken(null);
+            setUser(null);
+            
+            // 3. Редирект на логин или главную
+            navigate('/login');
+        }
+      };
   return (
     <>
     
@@ -36,8 +57,23 @@ function Navbar() {
             <LanguageSwitcher />
           </div>
           <div className="reg_log">
-              <Link to="/signup">SignUP</Link>
-              <Link to="/login">Login</Link>
+            {user ? (
+                    // Вид для залогиненного пользователя
+                    <div className="user-profile">
+                        <span className="welcome-text">
+                            Hi, <strong>{user.username}</strong>!
+                        </span>
+                        <button onClick={handleLogout} className="logout-btn">
+                            Logout
+                        </button>
+                    </div>
+                ) : (
+                    // Вид для гостя
+                    <div className="auth-buttons">
+                        <Link to="/login" className="login-link">Login</Link>
+                        <Link to="/signup" className="signup-btn">SignUp</Link>
+                    </div>
+                )}
             </div>
           <div className="burger_section">
             <Hamburger toggled={isOpen} toggle={setOpen} />

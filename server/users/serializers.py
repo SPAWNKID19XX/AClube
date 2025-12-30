@@ -15,14 +15,14 @@ class CustomUserSerializer(serializers.ModelSerializer):
         fields = ('__all__')
 
 class RegistrationSerializer(serializers.ModelSerializer):
-    password_confirmation = serializers.CharField(min_length=8, write_only=True)
+    password2 = serializers.CharField(min_length=8, write_only=True)
 
     class Meta:
         model = get_user_model()
-        fields=('username','email','password','password_confirmation','birth_date', 'is_accepted')
+        fields=('username','email','password1','password2','birth_date', 'is_accepted')
         extra_kwargs = {
-            "password_confirmation":{"write_only":True},
-            "password":{"write_only":True},
+            "password2":{"write_only":True},
+            "password1":{"write_only":True},
             "email": {"write_only": True, "required":True},
             "birth_date":{"write_only":True, "required":True},
             "is_accepted":{"required":True},

@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/6.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
+SITE_ID = 1
 import os
 from dotenv import load_dotenv
 
@@ -38,24 +39,6 @@ CORS_ALLOW_CREDENTIALS = True
 
 # Application definition
 
-INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-
-    "rest_framework",
-    "corsheaders",
-    "rest_framework_simplejwt",
-    'rest_framework.authtoken',
-    'dj_rest_auth',
-    'rest_framework_simplejwt.token_blacklist',
-
-    "notifications.apps.NotificationsConfig",
-    "users.apps.UsersConfig",
-]
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -64,6 +47,49 @@ REST_FRAMEWORK = {
     ),
 }
 
+REST_AUTH = {
+    'USE_JWT': True,
+    'JWT_AUTH_COOKIE': 'my-app-auth',
+    'JWT_AUTH_REFRESH_COOKIE': 'my-refresh-token',
+}
+
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+
+    # Библиотеки
+    'rest_framework',
+    'rest_framework.authtoken',
+
+    'corsheaders',
+    'rest_framework_simplejwt',
+    'rest_framework_simplejwt.token_blacklist',
+
+    # dj-rest-auth
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'dj_rest_auth',
+    'dj_rest_auth.registration',
+
+    # todo connect google, apple, fb auth
+    # 'allauth.socialaccount.providers.google'
+
+    # Твои приложения
+    "notifications.apps.NotificationsConfig",
+    "users.apps.UsersConfig",
+
+    # custom
+    # Optional -- requires install using `django-allauth[socialaccount]`.
+    ]
+
+
+
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -71,6 +97,8 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
+
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     # 'django.middleware.locale.LocaleMiddleware'
@@ -148,15 +176,4 @@ STATIC_URL = 'static/'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL")
 
-REST_USE_JWT = True
-JWT_AUTH_COOKIE = 'ac-auth-token'
-JWT_AUTH_REFRESH_COOKIE = 'ac-refresh-token'
-JWT_AUTH_HTTPONLY = True
-JWT_AUTH_SECURE = not DEBUG
-JWT_AUTH_SAMESITE = 'Lax'
-
-SIMPLE_JWT = {
-    'ROTATE_REFRESH_TOKENS': True,    # ВКЛЮЧАЕМ РОТАЦИЮ: новый refresh при каждом обновлении
-    'BLACKLIST_AFTER_ROTATION': True, # Старый refresh сразу в черный список
-    'UPDATE_LAST_LOGIN': True,
-}
+LOGIN_METHODS="username"
