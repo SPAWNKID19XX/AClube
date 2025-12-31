@@ -1,9 +1,14 @@
 {
     "navbar": {
-        "about": "About",
+        "home": "Home",
+        "about": "About Us",
         "membership": "Membership",
         "parties": "Parties",
-        "contacts": "Contacts"
+        "contacts": "Contacts",
+        "login": "Login",
+        "signup": "Sign Up",
+        "logout": "Logout",
+        "gratting": "Hi"
     },
     "main_content":{
         "h1":[

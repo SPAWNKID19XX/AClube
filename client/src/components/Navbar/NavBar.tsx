@@ -46,6 +46,7 @@ function Navbar() {
         
         <div className={`links_menu ${isOpen ? 'links_menu--open' : ''}`}>
           <ul>
+            <li className="link_nav"><a href='/'>{t("navbar.home")}</a></li>
             <li className="link_nav"><a href='#'>{t("navbar.about")}</a></li>
             <li className="link_nav"><a href='#'>{t("navbar.membership")}</a></li>
             <li className="link_nav"><a href='#'>{t("navbar.parties")}</a></li>
@@ -64,14 +65,14 @@ function Navbar() {
                             Hi, <strong>{user.username}</strong>!
                         </span>
                         <button onClick={handleLogout} className="logout-btn">
-                            Logout
+                            {t("navbar.logout")}
                         </button>
                     </div>
                 ) : (
                     // Вид для гостя
                     <div className="auth-buttons">
-                        <Link to="/login" className="login-link">Login</Link>
-                        <Link to="/signup" className="signup-btn">SignUp</Link>
+                        <Link to="/login" className="login-link">{t("navbar.login")}</Link>
+                        <Link to="/signup" className="signup-btn">{t("navbar.signup")}</Link>
                     </div>
                 )}
             </div>

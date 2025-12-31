@@ -1,9 +1,14 @@
 {
     "navbar": {
-        "about": "Acerca de",
+        "home": "Inicio",
+        "about": "Nosotros",
         "membership": "Membresía",
         "parties": "Fiestas",
-        "contacts": "Contactos"
+        "contacts": "Contactos",
+        "login": "Iniciar sesión",
+        "signup": "Registrarse",
+        "logout": "Cerrar sesión",
+        "gratting": "Hola"
     },
     "main_content": {
         "h1": [
