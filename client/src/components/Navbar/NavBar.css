@@ -78,14 +78,6 @@
 }
 
 
-.right_column{
-    align-content: center;
-    float: right;
-    display: flex;
-    flex-direction: column;
-}
-
-
 .lang_select {
     align-content: center;
     color: #d00909;
@@ -114,14 +106,25 @@
     
 }
 .user-profile button{
-    color: white;
-    background-color:  #d00909;
-    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logout-btn, .login-link, .signup-btn {
+    white-space: nowrap; /* Чтобы текст не переносился */
+    cursor: pointer;
+    text-decoration: none;
 }
 
 
 .burger_section{
     display: none;
+}
+
+.reg_log {
+    display: flex;
+    align-items: center;
 }
 
 
@@ -162,17 +165,22 @@
     }
 
     .right_column {
-        align-content: center;
+        margin-left: auto; 
         display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 20px; /* Расстояние между селектором, кнопками и бургером */
     }
 
     .burger_section {
-        display: block;
+        
         align-content: center;
         color: #c91010;
         margin-top: 30px;
         position: relative;
         z-index: 1100;
+        display: flex;
+        align-items: center;
     }
 
 
@@ -200,10 +208,6 @@
     }
 }
 
-
-@media (max-width: 768px) {
-    
-}
 
 @media (max-width: 650px) {
     .main_navbar .logo_section img{

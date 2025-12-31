@@ -36,9 +36,11 @@ function Navbar() {
     <>
     
       <Nav className='main_navbar'>
-        {/* Desctop version */}
+        {/* DesKtop version */}
         <div className="logo_section">
-          <img className="size-24 object-top-left" src={logo}/>
+          <Link to="/">
+            <img className="size-24 object-top-left" src={logo}/>
+          </Link>
         </div>
         
         <div className={`links_menu ${isOpen ? 'links_menu--open' : ''}`}>

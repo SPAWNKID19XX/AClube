@@ -42,7 +42,7 @@ const LoginForm = () => {
             // 2. Save access in AuthContext
             setAccessToken(access); 
 
-            const userRes = await api.get('users/api/v1/me/', {
+            const userRes = await api.get('users/api/v1/auth/user', {
                 headers: { Authorization: `Bearer ${access}` }
             });
             
