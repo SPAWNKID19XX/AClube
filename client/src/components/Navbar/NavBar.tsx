@@ -21,17 +21,14 @@ function Navbar() {
   const navigate = useNavigate();
   const handleLogout = async () => {
         try {
-            // 1. Сообщаем бэкенду о выходе (чтобы он аннулировал Refresh-куку)
-            // В dj-rest-auth это обычно POST на /auth/logout/
-            await api.post('users/api/v1/logout/');
+            await api.post('users/api/v1/auth/logout/');
         } catch (err) {
-            console.error("Ошибка при логауте на сервере", err);
+            console.error("Logout servers error", err);
         } finally {
-            // 2. Очищаем состояние на фронтенде в любом случае
             setAccessToken(null);
             setUser(null);
             
-            // 3. Редирект на логин или главную
+            //Redirect to login
             navigate('/login');
         }
       };
