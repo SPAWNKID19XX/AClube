@@ -67,6 +67,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
 
     'corsheaders',
+    'cities_light',
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
 
@@ -84,6 +85,7 @@ INSTALLED_APPS = [
     # Твои приложения
     "notifications.apps.NotificationsConfig",
     "users.apps.UsersConfig",
+    "parties.apps.PartiesConfig",
 
     # custom
     # Optional -- requires install using `django-allauth[socialaccount]`.
@@ -97,7 +99,6 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'allauth.account.middleware.AccountMiddleware',
-
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     # 'django.middleware.locale.LocaleMiddleware'
@@ -170,9 +171,11 @@ AUTH_USER_MODEL = 'users.CustomUser'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-STATIC_URL = 'static/'
-
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL")
 
 LOGIN_METHODS = "username"
+CITIES_LIGHT_TRANSLATION_LANGUAGES = ['pt', 'es']
+CITIES_LIGHT_INCLUDE_COUNTRIES = ['PT', 'ES']
+
+STATIC_URL = 'static/'

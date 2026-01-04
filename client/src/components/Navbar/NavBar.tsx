@@ -61,14 +61,13 @@ function Navbar() {
                     // Вид для залогиненного пользователя
                     <div className="user-profile">
                         <span className="welcome-text">
-                            Hi, <strong>{user.username}</strong>!
+                            {t("navbar.gratting")}, <strong>{user.username}</strong>!
                         </span>
                         <button onClick={handleLogout} className="logout-btn">
                             {t("navbar.logout")}
                         </button>
                     </div>
                 ) : (
-                    // Вид для гостя
                     <div className="auth-buttons">
                         <Link to="/login" className="login-link">{t("navbar.login")}</Link>
                         <Link to="/signup" className="signup-btn">{t("navbar.signup")}</Link>
