@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth import get_user_model
 
 
-
 # Create your models here.
 class Parties(models.Model):
 
@@ -29,8 +28,7 @@ class Parties(models.Model):
     ghosts = models.ManyToManyField(
         get_user_model(),
         blank=True,
-        related_name="ghosts",
-        null=True,
+        related_name="party_ghosts",
     )
 
 

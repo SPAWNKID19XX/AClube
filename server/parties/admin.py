@@ -26,7 +26,7 @@ class PartiesAdmin(admin.ModelAdmin):
         "ghosts",
     )
     list_display = ("title","max_invited","country", "region", "city")
-    readonly_fields=( "created_by",)
+    readonly_fields=( "created_by", "ghosts")
 
     def save_model(self, request, obj, form, change):
         if not change:
