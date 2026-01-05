@@ -1,5 +1,4 @@
 import React, { useState, useEffect, type ReactNode } from 'react';
-
 import { AuthContext, type User } from './AuthContext';
 import api from '../../api/exios';
 

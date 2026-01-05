@@ -1,7 +1,8 @@
 import './Parties.css'
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { useTranslation } from "react-i18next";
+import { AuthContext } from '../AuthContext/AuthContext';
 
 interface Party {
     id: number;
@@ -24,10 +25,13 @@ interface Party {
     ghosts: number[]
 }
 
+
 function Parties() {
     const [parties, setParties] = useState<Party[]>([])
     const {i18n} = useTranslation();
 
+    const { accessToken } = useContext(AuthContext);
+    
     useEffect(() => {
         const fetchData = async () => {
             const parties_list = await axios.get<Party[]>('http://127.0.0.1:8000/parties/api/v1/party-list/')
@@ -40,6 +44,41 @@ function Parties() {
             
         };
     }, []);
+
+    const handleJoin= async (partyId: number) => {
+
+        console.log('Твой токен из куки:', accessToken);
+
+        if (!accessToken) {
+            alert("Токен не найден. Пожалуйста, войдите в систему.");
+            return;
+        }
+        try {
+
+            const response = await axios.post(
+                `http://127.0.0.1:8000/parties/api/v1/party-list/${partyId}/join/`,
+                {}, 
+                {
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}` 
+                    }
+                }
+            );
+            alert(response.data.detail);
+        } catch (error: any) {
+            if (error.response) {
+                // Ошибка от сервера (400, 401, 403, 500)
+                console.error("Server Error Data:", error.response.data);
+                alert(`Error: ${error.response.data.detail || "Something went wrong"}`);
+            } else if (error.request) {
+                // Запрос ушел, но ответа нет (сервер лежит)
+                alert("No response from server. Check your connection.");
+            } else {
+                // Ошибка при настройке запроса
+                alert("Request Error: " + error.message);
+            }
+        }
+    }
 
 
     return (
@@ -62,7 +101,7 @@ function Parties() {
                                     })}
                                 </p>
                             </small>
-                            <button className='join_to_party'>Join</button>
+                            <button onClick={()=>handleJoin(party.id)} className='join_to_party'>Join</button>
                         </div>
                     ))}
                 </div>
