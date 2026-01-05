@@ -1,16 +1,16 @@
 import './App.css'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Home from './pages/Home'
-import Navbar from './components/Navbar/NavBar'
-import Footer from './components/Footer/Footer'
-import CookieConsent from './components/coockiesConsent/CookiesConsent'
-import PrivacyPolicy from './components/privacyPolicy/PrivacyPolicy'
-import CookiesPolicy from './components/cookiesPolicy/CookiesPolicy'
-import TermsConditions from './components/termsConditions/TermsConditions'
-import SignUpForm from './components/SignupForm/SignUpForm'
-import LoginForm from './components/LoginForm/LoginForm'
-import { AuthProvider } from './components/AuthContext/AuthProvider';
-import Parties from './components/Parties/Parties'
+import Navbar from './components/nav-bar/nav-bar'
+import Footer from './components/footer/footer'
+import CookieConsent from './components/coockies-consent/cookies-consent'
+import PrivacyPolicy from './components/privacy-policy/privacy-policy'
+import CookiesPolicy from './components/cookies-policy/cookies-policy'
+import TermsConditions from './components/terms-conditions/terms-conditions'
+import SignUpForm from './components/signup-form/signUp-form'
+import LoginForm from './components/login-form/login-form'
+import { AuthProvider } from './components/auth-context/auth-provider';
+import Parties from './components/parties/parties'
 
 function App() {
 

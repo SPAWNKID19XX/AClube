@@ -2,7 +2,7 @@ import './Parties.css'
 import { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { useTranslation } from "react-i18next";
-import { AuthContext } from '../AuthContext/AuthContext';
+import { AuthContext } from '../auth-context/auth-context';
 
 interface Party {
     id: number;

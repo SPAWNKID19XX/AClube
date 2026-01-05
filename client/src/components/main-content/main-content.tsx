@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import shampagne from "../../assets/img/bg-shampagne.png";
 import mask from "../../assets/img/mask.png";
 import React, { useState } from "react";
-import PrivacyModal from "../PupMainForm/PrivacyModal";
+import PrivacyModal from "../pup-main-form/privacy-modal";
 import { apiFetch } from "../../api/client";
 
 /**Description fields for subscribe form*/

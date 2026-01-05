@@ -1,6 +1,6 @@
 import './NavBar.css';
 import { Nav } from 'react-bootstrap';
-import LanguageSwitcher from '../LanguageSelector/LanguageSelector';
+import LanguageSwitcher from '../language-selector/language-selector';
 import { useState } from 'react';
 import Hamburger from 'hamburger-react'
 import { useTranslation } from "react-i18next";

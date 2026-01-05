@@ -1,5 +1,5 @@
 import React, { useState, useEffect, type ReactNode } from 'react';
-import { AuthContext, type User } from './AuthContext';
+import { AuthContext, type User } from './auth-context';
 import api from '../../api/exios';
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
