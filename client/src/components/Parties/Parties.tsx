@@ -33,17 +33,22 @@ function Parties() {
     const { accessToken } = useContext(AuthContext);
     
     useEffect(() => {
-        const fetchData = async () => {
-            const parties_list = await axios.get<Party[]>('http://127.0.0.1:8000/parties/api/v1/party-list/')
-            setParties(parties_list.data)           
-        }
-
-        fetchData();
-
-        return () => {
+        const fetchData = async() => {
+            try {
+                const response = await axios.get(`http://127.0.0.1:8000/parties/api/v1/party-list/`,
+                {
+                    headers: accessToken ? { Authorization: `Bearer ${accessToken}` } : {}
+                }
+            );
+            setParties(response.data)
+            } catch (error) {
+                console.error(error)
+            }
             
-        };
-    }, []);
+        }
+        fetchData()
+        
+    }, [accessToken]);
 
     const handleJoin= async (partyId: number) => {
 
