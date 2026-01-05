@@ -10,6 +10,7 @@ import TermsConditions from './components/termsConditions/TermsConditions'
 import SignUpForm from './components/SignupForm/SignUpForm'
 import LoginForm from './components/LoginForm/LoginForm'
 import { AuthProvider } from './components/AuthContext/AuthProvider';
+import Parties from './components/Parties/Parties'
 
 function App() {
 
@@ -47,6 +48,7 @@ function App() {
                             <LoginForm/>
                         </>
                     }/>
+                    <Route path="/parties" element={< Parties />} />
                 </Routes>
                 <CookieConsent/>
                 <Footer />

@@ -48,7 +48,7 @@ function Navbar() {
             <li className="link_nav"><a href='/'>{t("navbar.home")}</a></li>
             <li className="link_nav"><a href='#'>{t("navbar.about")}</a></li>
             <li className="link_nav"><a href='#'>{t("navbar.membership")}</a></li>
-            <li className="link_nav"><a href='#'>{t("navbar.parties")}</a></li>
+            <li className="link_nav"><a href='/parties'>{t("navbar.parties")}</a></li>
             <li className="link_nav"><a href='#'>{t("navbar.contacts")}</a></li>
           </ul>
         </div>
