@@ -27,6 +27,7 @@ interface Party {
     finish_dt: string,
     created_by: number,
     ghosts: number[]
+    reg_counted:number
 }
 
 
@@ -111,6 +112,9 @@ function Parties() {
                                             hour: '2-digit',
                                             minute: '2-digit'
                                         })}
+                                    </p>
+                                    <p>
+                                        Aaliable ghosts:{party.max_invited - party.reg_counted}
                                     </p>
                                 </small>
                             </div>
