@@ -6,6 +6,8 @@ import axios from 'axios';
 import { useTranslation } from "react-i18next";
 import { AuthContext } from '../auth-context/auth-context';
 
+const BASE_DRF_URL = import.meta.env.VITE_API_URL
+
 interface Party {
     id: number;
     title: string;
@@ -29,7 +31,7 @@ interface Party {
 
 
 const fetchParties = async (token: string | null): Promise<Party[]> => {
-    const response = await axios.get(`http://127.0.0.1:8000/parties/api/v1/party-list/`, {
+    const response = await axios.get(`${BASE_DRF_URL}/parties/api/v1/party-list/`, {
         headers: token ? { Authorization: `Bearer ${token}` } : {}
     });
     return response.data;
@@ -41,9 +43,8 @@ function Parties() {
     const queryClient = useQueryClient();
     
     const { data: parties = [], isLoading, isError, error, refetch } = useQuery({
-        queryKey: ['parties', accessToken], // Кэш зависит от токена
+        queryKey: ['parties', accessToken],
         queryFn: () => fetchParties(accessToken),
-        // Данные обновятся сами, когда accessToken изменится
     });
 
     if (isLoading) return <div>Загрузка вечеринок...</div>;
@@ -59,9 +60,8 @@ function Parties() {
             return;
         }
         try {
-
             const response = await axios.post(
-                `http://127.0.0.1:8000/parties/api/v1/party-list/${partyId}/join/`,
+                `${BASE_DRF_URL}/parties/api/v1/party-list/${partyId}/join/`,
                 {}, 
                 {
                     headers: {
@@ -95,7 +95,7 @@ function Parties() {
                 <h1>Partie List</h1>
                 <div className="party-list">
                     {parties.map((party) => (
-                        <div key={party.id} style={{ border: '1px solid #ccc', margin: '10px', padding: '10px' }}>
+                        <div key={party.id}>
                             <h2>{party.title}</h2>
                             <p>{party.description}</p>
                             <small>City: {party.city} | Max ghosts: {party.max_invited} 
