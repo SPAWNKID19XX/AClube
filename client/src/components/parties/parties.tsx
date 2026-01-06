@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
-import './parties.css'
+import styles from'./parties.module.css'
 import { useContext } from 'react';
 import axios from 'axios';
 import { useTranslation } from "react-i18next";
@@ -93,23 +93,32 @@ function Parties() {
         <>
             <div>
                 <h1>Partie List</h1>
-                <div className="party-list">
+                <div className={styles.party_list}>
                     {parties.map((party) => (
-                        <div key={party.id}>
-                            <h2>{party.title}</h2>
-                            <p>{party.description}</p>
-                            <small>City: {party.city} | Max ghosts: {party.max_invited} 
-                                <p>
-                                    Date:  {new Date(party.start_dt).toLocaleString(i18n.language, {
-                                        day: 'numeric',
-                                        month: 'long',
-                                        year: 'numeric',
-                                        hour: '2-digit',
-                                        minute: '2-digit'
-                                    })}
-                                </p>
-                            </small>
-                            <button onClick={()=>handleJoin(party.id)} className='join_to_party'>Join</button>
+                        <div className={styles.single_party} key={party.id}>
+                            <div className={styles.image_section}>
+
+                            </div>
+                            <div className={styles.text_section}>
+                                <h2>{party.title}</h2>
+                                <p>{party.description}</p>
+                                <small>City: {party.city} | Max ghosts: {party.max_invited} 
+                                    <p>
+                                        Date:  {new Date(party.start_dt).toLocaleString(i18n.language, {
+                                            day: 'numeric',
+                                            month: 'long',
+                                            year: 'numeric',
+                                            hour: '2-digit',
+                                            minute: '2-digit'
+                                        })}
+                                    </p>
+                                </small>
+                            </div>
+                            <div className={styles.btn_section}>
+                                <button onClick={()=>handleJoin(party.id)} className={styles.join_to_party}>Join</button>
+                            </div>
+                                                        
+                            
                         </div>
                     ))}
                 </div>

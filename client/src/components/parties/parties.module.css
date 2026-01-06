@@ -1,0 +1,41 @@
+.join_to_party{
+    border-radius: 50px;
+    width: 150px;
+    color: white;
+    background-color: red;
+}
+
+.party_list {
+    margin-top: 10px solid red;
+}
+
+.single_party{
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 2px solid red;
+}
+
+.image_section{
+    width: 24%;
+}
+
+
+.btn_section{
+    width: 24%;
+    display: flex;           
+    align-items: center;
+    justify-content: center; 
+}
+
+.btn_section button{
+    align-items: center;
+}
+
+
+
+.text_section{
+    text-align: left;
+    width: 50%;
+}
+
