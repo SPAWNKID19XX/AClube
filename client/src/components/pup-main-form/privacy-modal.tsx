@@ -1,4 +1,4 @@
-import './PrivacyModal.css'
+import './privacy-modal.css'
 import { useTranslation } from "react-i18next";
 import { useEffect } from "react";
 

@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import './Footer.css'
+import './footer.css'
 import fb from '../../assets/img/icons/facebook.png'
 import tt from '../../assets/img/icons/tiktok.png'
 import insta from '../../assets/img/icons/instagram.png'

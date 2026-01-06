@@ -1,4 +1,4 @@
-import './SignUpForm.css'
+import './signUp-form.css'
 import {useState} from "react";
 import axios from "axios";
 

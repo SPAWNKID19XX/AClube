@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import './CookiesPolicy.css';
+import './cookies-policy.css';
 import {useTranslation} from "react-i18next";
 
 const CookiesPolicy: React.FC = () => {

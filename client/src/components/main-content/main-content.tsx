@@ -1,4 +1,4 @@
-import "./MainCintent.css";
+import "./main-content.css";
 import { useTranslation } from "react-i18next";
 import shampagne from "../../assets/img/bg-shampagne.png";
 import mask from "../../assets/img/mask.png";

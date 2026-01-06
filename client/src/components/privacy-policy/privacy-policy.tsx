@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import './PrivacyPolicy.css';
+import './privacy-policy.css';
 import {useTranslation} from "react-i18next";
 
 const PrivacyPolicy: React.FC = () => {

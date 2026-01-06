@@ -1,4 +1,4 @@
-import './NavBar.css';
+import './nav-bar.css';
 import { Nav } from 'react-bootstrap';
 import LanguageSwitcher from '../language-selector/language-selector';
 import { useState } from 'react';

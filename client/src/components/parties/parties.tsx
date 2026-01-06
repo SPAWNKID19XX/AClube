@@ -1,5 +1,7 @@
-import './Parties.css'
-import { useState, useEffect, useContext } from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+
+import './parties.css'
+import { useContext } from 'react';
 import axios from 'axios';
 import { useTranslation } from "react-i18next";
 import { AuthContext } from '../auth-context/auth-context';
@@ -26,29 +28,27 @@ interface Party {
 }
 
 
-function Parties() {
-    const [parties, setParties] = useState<Party[]>([])
-    const {i18n} = useTranslation();
+const fetchParties = async (token: string | null): Promise<Party[]> => {
+    const response = await axios.get(`http://127.0.0.1:8000/parties/api/v1/party-list/`, {
+        headers: token ? { Authorization: `Bearer ${token}` } : {}
+    });
+    return response.data;
+};
 
+function Parties() {
+    const {i18n} = useTranslation();
     const { accessToken } = useContext(AuthContext);
+    const queryClient = useQueryClient();
     
-    useEffect(() => {
-        const fetchData = async() => {
-            try {
-                const response = await axios.get(`http://127.0.0.1:8000/parties/api/v1/party-list/`,
-                {
-                    headers: accessToken ? { Authorization: `Bearer ${accessToken}` } : {}
-                }
-            );
-            setParties(response.data)
-            } catch (error) {
-                console.error(error)
-            }
-            
-        }
-        fetchData()
-        
-    }, [accessToken]);
+    const { data: parties = [], isLoading, isError, error, refetch } = useQuery({
+        queryKey: ['parties', accessToken], // Кэш зависит от токена
+        queryFn: () => fetchParties(accessToken),
+        // Данные обновятся сами, когда accessToken изменится
+    });
+
+    if (isLoading) return <div>Загрузка вечеринок...</div>;
+    if (isError) return <div>Ошибка: {(error as any).message}</div>;
+
 
     const handleJoin= async (partyId: number) => {
 
@@ -70,6 +70,9 @@ function Parties() {
                 }
             );
             alert(response.data.detail);
+
+            queryClient.invalidateQueries({ queryKey: ['parties'] });
+
         } catch (error: any) {
             if (error.response) {
                 // Ошибка от сервера (400, 401, 403, 500)

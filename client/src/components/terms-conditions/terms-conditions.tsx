@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import './TermsConditions.css';
+import './terms-conditions.css';
 
 import {useTranslation} from "react-i18next";
 
