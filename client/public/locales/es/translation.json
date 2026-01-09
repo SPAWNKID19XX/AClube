@@ -1,9 +1,14 @@
 {
     "navbar": {
-        "about": "Acerca de",
+        "home": "Inicio",
+        "about": "Nosotros",
         "membership": "Membresía",
         "parties": "Fiestas",
-        "contacts": "Contactos"
+        "contacts": "Contactos",
+        "login": "Iniciar sesión",
+        "signup": "Registrarse",
+        "logout": "Cerrar sesión",
+        "gratting": "Hola"
     },
     "main_content": {
         "h1": [
@@ -13,7 +18,7 @@
         "p": "Descubre un mundo de sofisticación y placer",
         "form": {
             "title": "Únete a nosotros",
-            "subtitle": "nuestra vibra mejora con cada nueva persona que entra",
+            "subtitle": "Nuestra vibra mejora con cada nueva persona que entra",
             "label": [
                 "Nombre",
                 "Teléfono"

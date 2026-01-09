@@ -1,9 +1,14 @@
 {
     "navbar": {
-        "about": "About",
+        "home": "Home",
+        "about": "About Us",
         "membership": "Membership",
         "parties": "Parties",
-        "contacts": "Contacts"
+        "contacts": "Contacts",
+        "login": "Login",
+        "signup": "Sign Up",
+        "logout": "Logout",
+        "gratting": "Hi"
     },
     "main_content":{
         "h1":[
@@ -13,7 +18,7 @@
         "p": "Discover a world of sophistication and pleasure",
         "form":{
             "title":"Join us",
-            "subtitle": "our vibe gets better with every new person who walks in",
+            "subtitle": "Our vibe gets better with every new person who walks in",
             "label":[
                 "Name",
                 "Phone"

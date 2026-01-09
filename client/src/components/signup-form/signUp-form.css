@@ -1,0 +1,52 @@
+.signup-form-section {
+    margin-top: 50px;
+}
+
+form {
+    display: grid;
+    width: 50%;
+    display: grid;
+    margin: 0 auto;
+}
+.row_field{
+    display: grid;
+    margin: 25px auto;
+    width: 100%;
+}
+
+input{
+    background-color: aliceblue;
+    margin-top: 10px;
+    width: 100%;
+    color: black;
+}
+
+.button_submit  button{
+    background: #961010;
+    margin-top: 25px;
+}
+
+.accept_signup_terms a{
+    text-decoration: none;
+    border: 2px solid black;
+    color: gray;    
+}
+
+.accept_signup_terms a:hover{
+    color: gray;
+    border-bottom: 2px solid #961010;
+    
+}
+
+
+@media (max-width: 768px) {
+    form {
+        width: 90%;
+    }
+}
+
+@media (max-width: 500px) {
+    form {
+        width: 100%;
+    }
+}
