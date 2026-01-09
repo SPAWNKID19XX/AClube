@@ -1,5 +1,16 @@
 from django.contrib import admin
-from .models import Parties
+from .models import Parties, PartyPrice, OptionPrices
+
+
+class OptionPricesAdmin(admin.ModelAdmin):
+    fields = ("name", "price")
+    list_display = ("name", "price")
+
+
+class PartyPricesAdmin(admin.ModelAdmin):
+    fields = ("party", "price", "fixed_amount")
+    list_display = ("party", "price", "fixed_amount")
+
 
 # Register your models here.
 class PartiesAdmin(admin.ModelAdmin):
@@ -35,3 +46,6 @@ class PartiesAdmin(admin.ModelAdmin):
         super().save_model(request, obj, form, change)
 
 admin.site.register(Parties, PartiesAdmin)
+admin.site.register(PartyPrice, PartyPricesAdmin)
+
+admin.site.register(OptionPrices, OptionPricesAdmin)

@@ -1,7 +1,7 @@
 import './signUp-form.css'
 import {useState} from "react";
 import axios from "axios";
-
+import { useNavigate } from "react-router-dom";
 import {useTranslation} from "react-i18next";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
@@ -23,10 +23,11 @@ interface SignUpForm {
 const getEighteenYearsAgo = () => {
     const date = new Date();
     date.setFullYear(date.getFullYear() - 18);
-    return date.toISOString().split('T')[0]; // вернет "2007-12-28" (если сегодня 2025-й)
+    return date.toISOString().split('T')[0];
 };
 
 const SignUpForm = () => {
+    const navigate = useNavigate(); 
     const {t} = useTranslation();
     const [formData, setFormData] = useState({
         username: "",
@@ -78,6 +79,7 @@ const SignUpForm = () => {
                 birth_date:"",
                 is_accepted:false
             });
+            navigate("/login");
         } catch (err: unknown) {
             // cheking axios errors
             if (axios.isAxiosError(err)) {

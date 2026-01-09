@@ -2,6 +2,18 @@ from django.db import models
 from django.contrib.auth import get_user_model
 
 
+class OptionPrices(models.Model):
+    class Meta:
+        verbose_name = "Option Price"
+
+    name = models.CharField(max_length=50)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def __str__(self):
+        return f"{self.name} - {self.price}"
+
+
+
 # Create your models here.
 class Parties(models.Model):
     class Country(models.TextChoices):
@@ -37,3 +49,20 @@ class Parties(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class PartyPrice(models.Model):
+    class Meta:
+        verbose_name = "Party Price"
+
+    party = models.ForeignKey(
+        Parties,
+        on_delete=models.CASCADE,
+        related_name="prices",
+    )
+    price = models.ForeignKey(
+        OptionPrices,
+        on_delete=models.CASCADE
+    )
+
+    fixed_amount = models.DecimalField(max_digits=10, decimal_places=2)

@@ -86,6 +86,7 @@ INSTALLED_APPS = [
     "notifications.apps.NotificationsConfig",
     "users.apps.UsersConfig",
     "parties.apps.PartiesConfig",
+    'payments.apps.PaymentsConfig',
 
     # custom
     # Optional -- requires install using `django-allauth[socialaccount]`.
