@@ -24,7 +24,7 @@ class Parties(models.Model):
         verbose_name = "Party"
         verbose_name_plural = "Parties"
 
-    created_by=models.ForeignKey(get_user_model(),on_delete=models.CASCADE, related_name="created_by")
+    created_by=models.ForeignKey(get_user_model(),on_delete=models.CASCADE, related_name="user_parties")
     title = models.CharField(max_length=100)
     max_invited = models.IntegerField()
     country = models.CharField(max_length=2,choices=Country ,help_text="ISO code (e.g. PT or ES)")
@@ -66,3 +66,27 @@ class PartyPrice(models.Model):
     )
 
     fixed_amount = models.DecimalField(max_digits=10, decimal_places=2)
+
+class Ticket(models.Model):
+    user_created = models.ForeignKey(
+        get_user_model(),
+        on_delete=models.CASCADE,
+        related_name="user_tickets"
+    )
+    party = models.ForeignKey(
+        Parties,
+        on_delete=models.CASCADE
+    )
+    party_price = models.ForeignKey(
+        PartyPrice,
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name="tickets"
+    )
+    purchased_price_name = models.CharField(max_length=50)
+    purchased_amount = models.DecimalField(max_digits=10, decimal_places=2)
+    persons_count = models.IntegerField(default=1)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user_created}-{self.purchased_price_name}"

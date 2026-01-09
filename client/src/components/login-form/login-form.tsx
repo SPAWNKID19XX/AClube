@@ -4,7 +4,6 @@ import axios from "axios";
 import {useTranslation} from "react-i18next";
 import api from '../../api/exios';
 import { useAuth } from '../../hooks/useAuth';
-import { useNavigate } from "react-router-dom";
 
 
 
@@ -15,7 +14,6 @@ interface LoginForm {
 
 
 const LoginForm = () => {
-    const navigate = useNavigate(); 
     const {t} = useTranslation();
     console.log(t("AlibiClub translater error anulation"))
     const { setAccessToken, setUser } = useAuth(); 
@@ -52,7 +50,7 @@ const LoginForm = () => {
             setFormData({ username: "", password: "" });
 
             // 3. Redirect to index page with logined user
-            navigate('/');
+            // navigate('/');
 
         } catch (err: unknown) {
             if (axios.isAxiosError(err)) {

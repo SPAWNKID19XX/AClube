@@ -23,15 +23,18 @@
 
 .btn_section{
     width: 24%;
-    display: flex;           
-    align-items: center;
-    justify-content: center; 
+    display: grid;
+    align-items: center; 
 }
 
 .btn_section button{
     align-items: center;
 }
 
+.btn_section select{
+    color: #d00909, ;
+    background-color: black;
+}
 
 
 .text_section{

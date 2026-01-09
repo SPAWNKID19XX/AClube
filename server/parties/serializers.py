@@ -2,18 +2,21 @@ from rest_framework import serializers
 from .models import Parties, PartyPrice
 
 class PartyPricesSerializer(serializers.ModelSerializer):
+    price_name = serializers.CharField(read_only=True, source='price.name')
+
     class Meta:
         model = PartyPrice
         fields = (
-            'parties',
-            'name',
-            'amount',
+            'party',
+            'price_name',
+            'fixed_amount',
         )
 
 
 class PartiesSerializer(serializers.ModelSerializer):
     reg_counted = serializers.IntegerField(read_only=True)
     parties = PartyPricesSerializer(many=True,read_only=True)
+    prices = PartyPricesSerializer(many=True,read_only=True)
     class Meta:
         model = Parties
         fields = (

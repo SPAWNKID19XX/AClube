@@ -1,12 +1,20 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 import styles from'./parties.module.css'
-import { useContext } from 'react';
+import { useContext, useState} from 'react';
 import axios from 'axios';
 import { useTranslation } from "react-i18next";
 import { AuthContext } from '../auth-context/auth-context';
 
 const BASE_DRF_URL = import.meta.env.VITE_API_URL
+
+
+interface PartyPriceList {
+    id:number;
+    price_name: string;
+    fixed_amount: string;
+    party: number;
+}
 
 interface Party {
     id: number;
@@ -26,8 +34,9 @@ interface Party {
     start_dt: string,
     finish_dt: string,
     created_by: number,
-    ghosts: number[]
-    reg_counted:number
+    ghosts: number[],
+    reg_counted:number,
+    prices: PartyPriceList,
 }
 
 
@@ -48,22 +57,33 @@ function Parties() {
         queryFn: () => fetchParties(accessToken),
     });
 
+    console.log('++**++',parties)
+    const [selectedPrices, setSelectedPrices] = useState<Record<number, string>>({});
+
+    const handlePriceChange = (partyId: number, priceId: string) => {
+        setSelectedPrices((prev) => ({
+            ...prev,
+            [partyId]: priceId,
+        }));
+    };
+
     if (isLoading) return <div>Загрузка вечеринок...</div>;
     if (isError) return <div>Ошибка: {(error as any).message}</div>;
 
 
-    const handleJoin= async (partyId: number) => {
-
-        console.log('Твой токен из куки:', accessToken);
-
+    const handleJoin= async (partyId: number, priceId:string | undefined)  => {
         if (!accessToken) {
-            alert("Токен не найден. Пожалуйста, войдите в систему.");
+            alert("TOken doesnt exist pleasy try login again");
+            return;
+        }
+        if (!priceId) {
+            alert("Please select a ticket type!");
             return;
         }
         try {
             const response = await axios.post(
                 `${BASE_DRF_URL}/parties/api/v1/party-list/${partyId}/join/`,
-                {}, 
+                {price_id: priceId}, 
                 {
                     headers: {
                         'Authorization': `Bearer ${accessToken}` 
@@ -91,21 +111,22 @@ function Parties() {
 
 
     return (
-        <>
-            <div>
-                <h1>Partie List</h1>
-                <div className={styles.party_list}>
-                    {parties.map((party) => (
+    <>
+        <div>
+            <h1>Partie List</h1>
+            <div className={styles.party_list}>
+                {parties.map((party) => {
+                    const currentSelectedPrice = selectedPrices[party.id] || "";
+                    return (
                         <div className={styles.single_party} key={party.id}>
-                            <div className={styles.image_section}>
-
-                            </div>
+                            <div className={styles.image_section}></div>
                             <div className={styles.text_section}>
                                 <h2>{party.title}</h2>
                                 <p>{party.description}</p>
-                                <small>City: {party.city} | Max ghosts: {party.max_invited} 
+                                <small>
+                                    City: {party.city} | Max ghosts: {party.max_invited} 
                                     <p>
-                                        Date:  {new Date(party.start_dt).toLocaleString(i18n.language, {
+                                        Date: {new Date(party.start_dt).toLocaleString(i18n.language, {
                                             day: 'numeric',
                                             month: 'long',
                                             year: 'numeric',
@@ -114,21 +135,38 @@ function Parties() {
                                         })}
                                     </p>
                                     <p>
-                                        Aaliable ghosts:{party.max_invited - party.reg_counted}
+                                        Available ghosts: {party.max_invited - party.reg_counted}
                                     </p>
                                 </small>
                             </div>
                             <div className={styles.btn_section}>
-                                <button onClick={()=>handleJoin(party.id)} className={styles.join_to_party}>Join</button>
+                                <select 
+                                    value={currentSelectedPrice} // Добавь это для синхронизации
+                                    onChange={(e) => handlePriceChange(party.id, e.target.value)}
+                                >
+                                    <option value="">Select Tarif</option>
+                                    {party.prices?.map((price: PartyPriceList, index: number) => (
+                                        <option key={price.id || index} value={price.id}>
+                                            {price.price_name} — {price.fixed_amount}€
+                                        </option>
+                                    ))}
+                                </select>
+                                <button 
+                                    onClick={() => handleJoin(party.id, currentSelectedPrice)} 
+                                    className={styles.join_to_party}
+                                    disabled={!currentSelectedPrice} // Не даем нажать без выбора тарифа
+                                >
+                                    Join
+                                </button>
                             </div>
-                                                        
-                            
                         </div>
-                    ))}
-                </div>
+                    );
+                })}
             </div>
-        </>
-    )
+        </div>
+    </>
+);
+
 };
 
 export default Parties
