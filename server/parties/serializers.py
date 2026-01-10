@@ -7,6 +7,7 @@ class PartyPricesSerializer(serializers.ModelSerializer):
     class Meta:
         model = PartyPrice
         fields = (
+            'id',
             'party',
             'price_name',
             'fixed_amount',

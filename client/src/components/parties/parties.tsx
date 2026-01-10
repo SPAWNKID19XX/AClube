@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-
+import { useMemo } from 'react';
 import styles from'./parties.module.css'
 import { useContext, useState} from 'react';
 import axios from 'axios';
@@ -11,9 +11,9 @@ const BASE_DRF_URL = import.meta.env.VITE_API_URL
 
 interface PartyPriceList {
     id:number;
-    price_name: string;
-    fixed_amount: string;
-    party: number;
+    price_name?: string;
+    fixed_amount?: string;
+    party?: number;
 }
 
 interface Party {
@@ -36,7 +36,7 @@ interface Party {
     created_by: number,
     ghosts: number[],
     reg_counted:number,
-    prices: PartyPriceList,
+    prices: PartyPriceList[],
 }
 
 
@@ -48,18 +48,32 @@ const fetchParties = async (token: string | null): Promise<Party[]> => {
 };
 
 function Parties() {
+    const [isJoining, setIsJoining] = useState(false);
+
     const {i18n} = useTranslation();
     const { accessToken } = useContext(AuthContext);
     const queryClient = useQueryClient();
     
+    const [selectedPrices, setSelectedPrices] = useState<Record<number, string>>({});
+
     const { data: parties = [], isLoading, isError, error, refetch } = useQuery({
         queryKey: ['parties', accessToken],
         queryFn: () => fetchParties(accessToken),
+
     });
 
-    console.log('++**++',parties)
-    const [selectedPrices, setSelectedPrices] = useState<Record<number, string>>({});
+    const allPricesList = useMemo(() => {
+        // Проходим по всем вечеринкам и собираем их цены в один массив
+        return parties.flatMap(party => party.prices || []);
+    }, [parties]); 
 
+    if (parties.length > 0) {
+        console.log("Avaliable Price List", allPricesList);
+    }
+    
+    
+
+    
     const handlePriceChange = (partyId: number, priceId: string) => {
         setSelectedPrices((prev) => ({
             ...prev,
@@ -71,26 +85,38 @@ function Parties() {
     if (isError) return <div>Ошибка: {(error as any).message}</div>;
 
 
-    const handleJoin= async (partyId: number, priceId:string | undefined)  => {
+    const handleJoin= async (partyId: number, priceId: number | undefined)  => {
         if (!accessToken) {
             alert("TOken doesnt exist pleasy try login again");
             return;
         }
-        if (!priceId) {
-            alert("Please select a ticket type!");
-            return;
-        }
+        if (isJoining) return; 
+        setIsJoining(true);
+
         try {
             const response = await axios.post(
                 `${BASE_DRF_URL}/parties/api/v1/party-list/${partyId}/join/`,
                 {price_id: priceId}, 
+
                 {
+                    method:'POST',
                     headers: {
-                        'Authorization': `Bearer ${accessToken}` 
-                    }
+                        'Authorization': `Bearer ${accessToken}`,
+                        'Content-Type': 'application/json',
+                    },
                 }
             );
             alert(response.data.detail);
+
+            const { clientSecret } = response.data;
+
+            if (clientSecret) {
+                // ЗДЕСЬ БУДЕТ ВЫЗОВ STRIPE ЭЛЕМЕНТОВ
+                console.log("Payment Intent Created. Secret:", clientSecret);
+                // Например: window.location.href = `/checkout?session=${clientSecret}`;
+            } else {
+                alert(response.data.detail);
+            }
 
             queryClient.invalidateQueries({ queryKey: ['parties'] });
 
@@ -106,7 +132,9 @@ function Parties() {
                 // Ошибка при настройке запроса
                 alert("Request Error: " + error.message);
             }
-        }
+        }  finally {
+        setIsJoining(false); 
+    }
     }
 
 
@@ -141,22 +169,34 @@ function Parties() {
                             </div>
                             <div className={styles.btn_section}>
                                 <select 
-                                    value={currentSelectedPrice} // Добавь это для синхронизации
+                                    value={currentSelectedPrice} 
                                     onChange={(e) => handlePriceChange(party.id, e.target.value)}
                                 >
                                     <option value="">Select Tarif</option>
-                                    {party.prices?.map((price: PartyPriceList, index: number) => (
-                                        <option key={price.id || index} value={price.id}>
-                                            {price.price_name} — {price.fixed_amount}€
-                                        </option>
-                                    ))}
+                                    {party.prices?.map((price: PartyPriceList, index: number) => {
+                                        // Если ID вдруг нет, используем комбинацию, чтобы React не ругался
+                                        const uniqueKey = price.id ? `price-${price.id}` : `idx-${party.id}-${index}`;
+                                        
+                                        if (!price.id) {
+                                            console.warn("Внимание: у объекта цены отсутствует ID!", price);
+                                        }
+
+                                        return (
+                                            <option key={uniqueKey} value={price.id}>
+                                                {price.price_name} — {price.fixed_amount}€
+                                            </option>
+                                        );
+                                    })}
                                 </select>
                                 <button 
-                                    onClick={() => handleJoin(party.id, currentSelectedPrice)} 
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        handleJoin(party.id, currentSelectedPrice);
+                                    }}
                                     className={styles.join_to_party}
-                                    disabled={!currentSelectedPrice} // Не даем нажать без выбора тарифа
+                                    disabled={!currentSelectedPrice || isJoining}
                                 >
-                                    Join
+                                    {isJoining ? "Processing..." : "Join"}
                                 </button>
                             </div>
                         </div>
