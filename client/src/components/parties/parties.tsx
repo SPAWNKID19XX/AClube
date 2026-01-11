@@ -5,8 +5,24 @@ import { useContext, useState} from 'react';
 import axios from 'axios';
 import { useTranslation } from "react-i18next";
 import { AuthContext } from '../auth-context/auth-context';
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
 
-const BASE_DRF_URL = import.meta.env.VITE_API_URL
+const BASE_DRF_URL =  import.meta.env.VITE_API_URL
+const STRIPE_PK = loadStripe(import.meta.env.VITE_TEST_PK);
+const stripePublicKey = import.meta.env.VITE_TEST_PK
+
+if (!STRIPE_PK) {
+    console.error("Критическая ошибка: STRIPE_PK не найден в .env файле!");
+} else {
+    console.log("+++++++++++", STRIPE_PK)
+}
+
+if (!stripePublicKey) {
+    console.error("Критическая ошибка: VITE_STRIPE_PUBLIC_KEY не найден в .env файле!");
+} else {
+    console.log("------------", stripePublicKey)
+}
 
 
 interface PartyPriceList {
@@ -81,13 +97,13 @@ function Parties() {
         }));
     };
 
-    if (isLoading) return <div>Загрузка вечеринок...</div>;
-    if (isError) return <div>Ошибка: {(error as any).message}</div>;
+    if (isLoading) return <div>Parties loading...</div>;
+    if (isError) return <div>Error: {(error as any).message}</div>;
 
 
     const handleJoin= async (partyId: number, priceId: number | undefined)  => {
         if (!accessToken) {
-            alert("TOken doesnt exist pleasy try login again");
+            alert("Token doesnt exist pleasy try login again");
             return;
         }
         if (isJoining) return; 
@@ -106,14 +122,11 @@ function Parties() {
                     },
                 }
             );
-            alert(response.data.detail);
 
-            const { clientSecret } = response.data;
-
-            if (clientSecret) {
-                // ЗДЕСЬ БУДЕТ ВЫЗОВ STRIPE ЭЛЕМЕНТОВ
-                console.log("Payment Intent Created. Secret:", clientSecret);
-                // Например: window.location.href = `/checkout?session=${clientSecret}`;
+            console.log('RESPONSE', response.data.url);
+            
+            if (response.data.url) {                
+                window.location.href = response.data.url;
             } else {
                 alert(response.data.detail);
             }
