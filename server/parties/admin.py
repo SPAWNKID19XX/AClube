@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Parties, PartyPrice, OptionPrices
+from .models import Parties
+from payments.models import PartyPrice, OptionPrices
 
 
 class OptionPricesAdmin(admin.ModelAdmin):

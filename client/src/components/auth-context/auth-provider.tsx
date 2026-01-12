@@ -29,6 +29,24 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     };
 
     useEffect(() => {
+        const requestIntercept = api.interceptors.request.use(
+            (config) => {
+                if (accessToken && !config.headers.Authorization) {
+                    config.headers.Authorization = `Bearer ${accessToken}`;
+                }
+                return config;
+            },
+            (error) => Promise.reject(error)
+        );
+
+        return () => api.interceptors.request.eject(requestIntercept);
+    }, [accessToken]);
+
+    useEffect(() => {
+        refreshAndLoadUser();
+    }, []);
+
+    useEffect(() => {
         // execut once on start of app
         refreshAndLoadUser();
     }, []);

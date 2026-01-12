@@ -1,6 +1,5 @@
-from django.shortcuts import redirect
-from django.conf import settings
-from .models import OptionPrices
+from .models import Parties
+from payments.models import PartyPrice, OptionPrices
 import os
 from django.db.models import Count
 from rest_framework.response import Response

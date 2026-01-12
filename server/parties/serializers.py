@@ -1,23 +1,13 @@
 from rest_framework import serializers
-from .models import Parties, PartyPrice
-
-class PartyPricesSerializer(serializers.ModelSerializer):
-    price_name = serializers.CharField(read_only=True, source='price.name')
-
-    class Meta:
-        model = PartyPrice
-        fields = (
-            'id',
-            'party',
-            'price_name',
-            'fixed_amount',
-        )
+from .models import Parties
+from payments.models import PartyPrice, OptionPrices
+from payments.serializers import PartyPricesSerializer, OptionPriceSerializer
 
 
 class PartiesSerializer(serializers.ModelSerializer):
     reg_counted = serializers.IntegerField(read_only=True)
     parties = PartyPricesSerializer(many=True,read_only=True)
-    prices = PartyPricesSerializer(many=True,read_only=True)
+    prices = serializers.SerializerMethodField()
     class Meta:
         model = Parties
         fields = (
@@ -38,3 +28,9 @@ class PartiesSerializer(serializers.ModelSerializer):
             'parties',
             'prices'
         )
+
+
+    def get_prices(self, obj):
+        queryset=OptionPrices.objects.all()
+        serializer = OptionPriceSerializer(queryset, many=True, read_only=True)
+        return serializer.data
