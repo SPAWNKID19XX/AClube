@@ -62,9 +62,6 @@ function Parties(){
 
     const { accessToken } = useAuth();
 
-    console.log('*******************',accessToken);
-    
-
     const {mutate, isPanding} = useMutation({
         mutationFn: async ({partyId, priceId}: {partyId: number, priceId: number }) => {
         
@@ -81,8 +78,16 @@ function Parties(){
         );            
             return response.data
         },
-        onSuccess: () => {
+        onSuccess: (data) => {
             queryClient.invalidateQueries({ queryKey: ['parties'] });
+            if (data.url){
+                console.log("DATA:", data.url);
+                window.location.href=data.url
+            } else {
+                console.log("NO DATA:");
+            }
+            
+            
             alert("Success join!");
         },
         onError: (error: any) => {
@@ -93,10 +98,7 @@ function Parties(){
     const handleJoin = (partyId: number, priceId:number) => {
         if (!priceId) {
             alert("Price does not exist")
-        }
-        console.log(partyId);
-        console.log('===',priceId);
-        
+        }        
         mutate({ partyId, priceId})
     }
 
@@ -115,10 +117,6 @@ function Parties(){
 
     if (isLoading) return <div>Loading party list...</div>
     if (isError) return <div><h1>{error.message}</h1></div>
-
-
-
-
         
     return (
         <>

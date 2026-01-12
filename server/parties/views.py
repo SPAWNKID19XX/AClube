@@ -1,3 +1,5 @@
+from django.shortcuts import redirect
+
 from .models import Parties
 from payments.models import PartyPrice, OptionPrices
 import os
@@ -11,6 +13,7 @@ from rest_framework.views import APIView
 import stripe
 from .models import Parties
 from .serializers import PartiesSerializer, PartyPricesSerializer
+from payments.views import create_checkout_session_stripe
 
 # Create your views here.
 VITE_BASE_URL = os.getenv("VITE_BASE_URL")
@@ -38,36 +41,9 @@ class JoinPartyAPIView(APIView):
         if party.ghosts.filter(id=user.id).exists():
             raise ValidationError({"detail": "Are you already in party"})
 
-        try:
-            price_obj_id = request.data.get("price_id")
-            price_obj = get_object_or_404(OptionPrices, pk=price_obj_id)
-
-            stripe.api_key = os.getenv("TEST_SK")
-
-            checkout_session = stripe.checkout.Session.create(
-                line_items=[
-                    {
-                        'price_data': {
-                            'currency': 'eur',  # Или другая валюта
-                            'unit_amount': int(price_obj.price*100),
-                            'product_data': {
-                                'name': f"{party}-{price_obj.name}",
-                            },
-                        },
-                        'quantity': 1,
-                    },
-                ],
-                mode='payment',
-                success_url=VITE_BASE_URL + '/success.html?session_id={CHECKOUT_SESSION_ID}',
-                cancel_url=VITE_BASE_URL + '/cancel.html',
-            )
-            return Response(
-                {'url': checkout_session.url},
-                status=status.HTTP_200_OK
-            )
-        except Exception as e:
-            print(f"Error: {e}")  # Для отладки в консоли
-            return Response(
-                {"detail": "Server error", "error": str(e)},
-                status=status.HTTP_500_INTERNAL_SERVER_ERROR
-            )
+        payment_session_url =  create_checkout_session_stripe(
+            user_id=user,
+            party_id=party.id,
+            price_id=request.data.get("price_id")
+        ).data["url"]
+        return Response({"url": payment_session_url}, status=status.HTTP_200_OK)
