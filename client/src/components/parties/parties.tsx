@@ -5,6 +5,7 @@ import { useContext, useState} from 'react';
 import axios from 'axios';
 import { useTranslation } from "react-i18next";
 import { AuthContext } from '../auth-context/auth-context';
+import { useAuth } from '../../hooks/useAuth';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import createUtilityClassName from 'react-bootstrap/esm/createUtilityClasses';
@@ -59,22 +60,37 @@ function Parties(){
     const [selectedPriceId, setSelectedPriceId] = useState<number | null>(null)
     const queryClient = useQueryClient()
 
+    const { accessToken } = useAuth();
+
+    console.log('*******************',accessToken);
+    
+
     const {mutate, isPanding} = useMutation({
-        mutationFn: async ({partyId, priceId}) => {
+        mutationFn: async ({partyId, priceId}: {partyId: number, priceId: number }) => {
         
-            return await all_parties_list.post(`/party-list/${partyId}/join/`, { 
+            const response = await all_parties_list.post(`/party-list/${partyId}/join/`, { 
                 party_id: partyId, 
                 price_id: priceId 
             },
-            { 
-                headers: {
-                    Authorization: `Bearer ${token}` 
-                }
-            });
+            {
+                headers: { 
+                    Authorization: `Bearer ${accessToken}` 
+                },                
+            }
+        
+        );            
+            return response.data
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['parties'] });
+            alert("Success join!");
+        },
+        onError: (error: any) => {
+            alert(error.response?.data?.detail || "Error joining party");
         }
     })
     
-    const handleJoin = (partyId: number, priceId:number | null) => {
+    const handleJoin = (partyId: number, priceId:number) => {
         if (!priceId) {
             alert("Price does not exist")
         }
@@ -112,7 +128,7 @@ function Parties(){
                     {
                         parties?.map((party) =>{
                             const currentPrice =  party.prices?.find(price => price.id === selectedPriceId)
-                            console.log('=====',currentPrice);
+                            
                             
                             return(
                                 <div className={styles.single_party} key={party.id}>
