@@ -11,6 +11,7 @@ import SignUpForm from './components/signup-form/signUp-form'
 import LoginForm from './components/login-form/login-form'
 import { AuthProvider } from './components/auth-context/auth-provider';
 import Parties from './components/parties/parties'
+import SuccessPaymentPage from './components/payment/success_payment'   
 
 function App() {
 
@@ -43,6 +44,13 @@ function App() {
                             <SignUpForm/>
                         </>
                     }/>
+
+                    <Route path="/success.html" element={
+                        <>
+                            <SuccessPaymentPage/>
+                        </>
+                    }/>
+
                     <Route path="/login" element={
                         <>
                             <LoginForm/>

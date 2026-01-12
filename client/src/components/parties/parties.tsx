@@ -1,14 +1,9 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { useMemo } from 'react';
 import styles from'./parties.module.css'
-import { useContext, useState} from 'react';
+import { useState} from 'react';
 import axios from 'axios';
 import { useTranslation } from "react-i18next";
-import { AuthContext } from '../auth-context/auth-context';
 import { useAuth } from '../../hooks/useAuth';
-import { Elements } from '@stripe/react-stripe-js';
-import { loadStripe } from '@stripe/stripe-js';
-import createUtilityClassName from 'react-bootstrap/esm/createUtilityClasses';
 
 interface PartyPriceList {
     id:number;
