@@ -32,8 +32,10 @@ const SuccessPaymentPage = () => {
             <div className="payment-information">
                 <h1>Success payment</h1>
                 <small>
-                    <p>payment session_id {sessionId}</p>
+                    <p>payment session_id<br/> {sessionId}</p>
                 </small>
+
+                <a href="/parties">Return to parties</a>
                 
             </div>
         </>

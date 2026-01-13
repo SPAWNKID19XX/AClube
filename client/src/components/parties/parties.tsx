@@ -5,6 +5,13 @@ import axios from 'axios';
 import { useTranslation } from "react-i18next";
 import { useAuth } from '../../hooks/useAuth';
 
+interface PartyCardProps {
+    party: Party;
+    onJoin: (partyId: number, priceId: number) => void;
+    isPanding: boolean;
+    i18n: any;
+}
+
 interface PartyPriceList {
     id:number;
     name?: string;
@@ -34,6 +41,55 @@ interface Party {
     prices: PartyPriceList[],
 }
 
+const PartyCard = ({ party, onJoin, isPanding, i18n }: { 
+    party: Party, 
+    onJoin: (pId: number, prId: number) => void, 
+    isPanding: boolean, 
+    i18n: any 
+}) => {
+    // Локальное состояние для конкретного дропдауна
+    const [selectedPriceId, setSelectedPriceId] = useState<number | "">("");
+
+    return (
+        <div className={styles.single_party}>
+            <div className={styles.image_section}></div>
+            <div className={styles.text_section}>
+                <h2>{party.title}</h2>
+                <p>{party.description}</p>
+                <small>
+                    City: {party.city} | Max ghosts: {party.max_invited}
+                    <p>
+                        Date: {new Date(party.start_dt).toLocaleString(i18n.language, {
+                            day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit'
+                        })}
+                    </p>
+                    <p>Available ghosts: {party.max_invited - party.reg_counted}</p>
+                </small>
+            </div>
+            <div className={styles.btn_section}>
+                <select 
+                    value={selectedPriceId} 
+                    onChange={(e) => setSelectedPriceId(Number(e.target.value))}
+                >
+                    <option value="">Select Tarif</option>
+                    {party.prices?.map((price) => (
+                        <option key={price.id} value={price.id}>
+                            {price.name} — {price.price}€
+                        </option>
+                    ))}
+                </select>
+                <button 
+                    onClick={() => onJoin(party.id, Number(selectedPriceId))}
+                    className={styles.join_to_party}
+                    disabled={!selectedPriceId || isPanding}
+                >
+                    {isPanding ? "Processing..." : "Join"}
+                </button>
+            </div>
+        </div>
+    );
+};
+
 const base_url = import.meta.env.VITE_API_URL
 
 const all_parties_list = axios.create({
@@ -47,139 +103,63 @@ const fetchParties = async (): Promise<Party[]> => {
     return data
 }
 
-
-
-
 function Parties(){
-    const {i18n} = useTranslation()
-    const [selectedPriceId, setSelectedPriceId] = useState<number | null>(null)
-    const queryClient = useQueryClient()
-
+    const { i18n } = useTranslation();
+    const queryClient = useQueryClient();
     const { accessToken } = useAuth();
 
-    const {mutate, isPanding} = useMutation({
-        mutationFn: async ({partyId, priceId}: {partyId: number, priceId: number }) => {
-        
-            const response = await all_parties_list.post(`/party-list/${partyId}/join/`, { 
-                party_id: partyId, 
-                price_id: priceId 
-            },
-            {
-                headers: { 
-                    Authorization: `Bearer ${accessToken}` 
-                },                
-            }
-        
-        );            
-            return response.data
+    const { mutate, isPending } = useMutation({ // Внимание: правильно isPending (через e)
+        mutationFn: async ({ partyId, priceId }: { partyId: number, priceId: number }) => {
+            const response = await all_parties_list.post(`/party-list/${partyId}/join/`, {
+                party_id: partyId,
+                price_id: priceId
+            }, {
+                headers: { Authorization: `Bearer ${accessToken}` },
+            });
+            return response.data;
         },
         onSuccess: (data) => {
             queryClient.invalidateQueries({ queryKey: ['parties'] });
-            if (data.url){
-                console.log("DATA:", data.url);
-                window.location.href=data.url
-            } else {
-                console.log("NO DATA:");
+            if (data.url) {
+                window.location.href = data.url;
             }
-            
-            
             alert("Success join!");
         },
         onError: (error: any) => {
             alert(error.response?.data?.detail || "Error joining party");
         }
-    })
+    });
     
-    const handleJoin = (partyId: number, priceId:number) => {
+    const handleJoin = (partyId: number, priceId: number) => {
         if (!priceId) {
-            alert("Price does not exist")
-        }        
-        mutate({ partyId, priceId})
-    }
+            alert("Please select a price");
+            return;
+        }
+        mutate({ partyId, priceId });
+    };
 
-
-    const { 
-        data: parties, 
-        isLoading, 
-        error, 
-        isError 
-    } = useQuery<Party[]>({
-        queryKey: ['parties'], 
-        queryFn: fetchParties, 
+    const { data: parties, isLoading, isError, error } = useQuery<Party[]>({
+        queryKey: ['parties'],
+        queryFn: fetchParties,
     });
 
-    if (parties) console.log('Parties list',parties)
-
-    if (isLoading) return <div>Loading party list...</div>
-    if (isError) return <div><h1>{error.message}</h1></div>
+    if (isLoading) return <div>Loading party list...</div>;
+    if (isError) return <div><h1>{error.message}</h1></div>;
         
     return (
         <>
             <div>
-                <h1>Partie List</h1>
+                <h1>Party List</h1>
                 <div className={styles.party_list}>
-                    {
-                        parties?.map((party) =>{
-                            const currentPrice =  party.prices?.find(price => price.id === selectedPriceId)
-                            
-                            
-                            return(
-                                <div className={styles.single_party} key={party.id}>
-                                    <div className={styles.image_section}></div>
-                                    <div className={styles.text_section}>
-                                        <h2>{party.title}</h2>
-                                        <p>{party.description}</p>
-                                        <small>
-                                            City: {party.city} | Max ghosts: {party.max_invited} 
-                                            <p>
-                                                Date: {new Date(party.start_dt).toLocaleString(i18n.language, {
-                                                    day: 'numeric',
-                                                    month: 'long',
-                                                    year: 'numeric',
-                                                    hour: '2-digit',
-                                                    minute: '2-digit'
-                                                })}
-                                            </p>
-                                            <p>
-                                                Available ghosts: {party.max_invited - party.reg_counted}
-                                            </p>
-                                        </small>
-                                    </div>
-                                    <div className={styles.btn_section}>
-                                        <select 
-                                            value={selectedPriceId || ""} 
-                                            onChange={(e) => setSelectedPriceId(e.target.value)}
-                                        >
-                                            <option value="">Select Tarif</option>
-                                            {party.prices?.map((price: PartyPriceList, index: number) => {
-                                                const uniqueKey = price.id ? `price-${price.id}` : `idx-${party.id}-${index}`;
-                                                if (!price.id) {
-                                                    console.warn("Внимание: у объекта цены отсутствует ID!", price);
-                                                }
-
-
-                                                return (
-                                                    <option key={uniqueKey} value={price.id}>
-                                                        {price.name} — {price.price}€
-                                                    </option>
-                                                );
-                                            })}
-                                        </select>
-                                        <button 
-                                            onClick={(e) => {
-                                                e.preventDefault();
-                                                handleJoin(party.id, selectedPriceId);
-                                            }}
-                                            className={styles.join_to_party}
-                                            disabled={!selectedPriceId || isPanding}
-                                        >
-                                            {isPanding ? "Processing..." : "Join"}
-                                        </button>
-                                    </div>
-                                </div>
-                            )
-                        })
-                    }
+                    {parties?.map((party) => (
+                        <PartyCard 
+                            key={party.id} 
+                            party={party} 
+                            onJoin={handleJoin} 
+                            isPanding={isPending} 
+                            i18n={i18n} 
+                        />
+                    ))}
                 </div>
             </div>
         </>
