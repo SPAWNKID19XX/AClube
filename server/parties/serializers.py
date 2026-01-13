@@ -1,11 +1,11 @@
 from rest_framework import serializers
 from .models import Parties
-from payments.models import PartyPrice, OptionPrices
+from payments.models import PartyPrice, OptionPrices, Ticket
 from payments.serializers import PartyPricesSerializer, OptionPriceSerializer
 
 
 class PartiesSerializer(serializers.ModelSerializer):
-    reg_counted = serializers.IntegerField(read_only=True)
+    reg_counted = serializers.SerializerMethodField()
     parties = PartyPricesSerializer(many=True,read_only=True)
     prices = serializers.SerializerMethodField()
     class Meta:
@@ -34,3 +34,10 @@ class PartiesSerializer(serializers.ModelSerializer):
         queryset=OptionPrices.objects.all()
         serializer = OptionPriceSerializer(queryset, many=True, read_only=True)
         return serializer.data
+
+    def get_reg_counted(self, obj):
+        total=0
+        queryset = Ticket.objects.all().only("persons_count")
+        for i in queryset:
+            total+=i.persons_count
+        return total

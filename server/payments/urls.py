@@ -1,6 +1,8 @@
 from django.urls import path
+from .views import ConfirmationPaymentAPIView
+
 
 
 urlpatterns = [
-    path('create-session/', CreateChackoutSessionApi.as_view(), name='create-session'),
+    path('confirmation-payment/', ConfirmationPaymentAPIView.as_view(), name='confirmation-payment'),
 ]

@@ -41,7 +41,7 @@ class Ticket(models.Model):
         on_delete=models.CASCADE
     )
     party_price = models.ForeignKey(
-        PartyPrice,
+        OptionPrices,
         on_delete=models.SET_NULL,
         null=True,
         related_name="tickets"
